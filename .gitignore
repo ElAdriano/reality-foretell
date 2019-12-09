@@ -1,0 +1,5 @@
+# Group 15 - RealityForetell gitignore
+
+.idea/*
+out/*
+RealityForetell.iml
