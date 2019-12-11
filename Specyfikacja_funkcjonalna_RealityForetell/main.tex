@@ -1,0 +1,105 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{indentfirst}
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\L{}ukasz Leszczy\'nski, Adrian B\k{a}czek}
+\lhead{RealityForetell}
+\rfoot{Strona \thepage/3}
+
+\begin{document}
+
+\begin{titlepage}
+   \begin{center}
+       \vspace*{1cm}
+       \huge
+       \textbf{Specyfikacja funkcjonalna RealityForetell}
+       \vspace{0.5cm}
+        \par 
+        Projekt zespol{}owy GR2
+        \par
+       \vspace{1.5cm}
+       \textbf{\L{}ukasz Leszczy\'nski, Adrian B\k{a}czek}
+   \end{center}
+\end{titlepage}
+
+\section{OPIS OG\'OLNY}\par
+\subsection{Nazwa programu}
+Nasz program nazywa si\k{e} $,,$RealityForetell$''$  – nazwa nawiązuje do opisu dystopicznej przyszłości przedstawionej w opisie problemu \par
+
+\subsection{Poruszany problem}
+Program na podstawie zadanych przez użytkownika parametrów, generuje optymalny zakład penitencjarny (ZP), przedstawia jego graficzną reprezentację, podaje koszt wybudowania takiego ZP oraz ocenia dany projekt.
+
+\subsection{U\.zytkownik docelowy}
+Mo\.ze to by\'c dowolna osoba planuj\k{a}ca złożyć swój projekt do przetargu na budowę nowoczesnego ZP lub zainteresowana wykonaniem kosztorysu ZP odpowiadającego przedstawionym parametrom.
+
+\section{OPIS FUNKCJONALNO\'SCI}
+\subsection{Jak korzysta\'c z programu?}
+Program wymaga do pracy:\par
+
+\begin{itemize}
+	\item Maszyn\k{e} wirtuln\k{a} JAVA'y\par
+
+	\item Mysz komputerow\k{a}
+
+\end{itemize}\par
+
+Program nie przyjmuje \.zadnych parametr\'ow.
+
+\subsection{Uruchomienie programu}
+
+Program uruchamia si\k{e} poprzez wirtualn\k{a} maszyn\k{e} Java'y. Po rozpocz\k{e}ciu dzia\l{}ania przywita nas menu g\l{}\'owne z kt\'orego b\k{e}dziemy mogli wybra\'c parametry budowy ZP.
+
+\subsection{Mo\.zliwo\'sci programu}
+
+Program wczytuje podane parametry planowanego ZP i na ich podstawie generuje pokolenie projektów, które są następnie poddane algorytmowi genetycznemu. Wynikiem działania algorytmu jest projekt więzienia, który przy spełnieniu paramaterów podanych na wejściu oraz warunków koniecznych, dostał największą ocenę. Najlepsze dane projekty z każdego pokolenia są następnie przedstawiane graficznie na ekranie komputera, wraz z ich kosztorysem oraz oceną. Po skończeniu działania algorytmu genetycznego, użytkownik ma możliwość zmiany parametrów wejściowych, a cały przedstawiony proces zostanie wykonany ponownie.
+
+\section{FORMAT DANYCH}
+
+\subsection{Dane wej\'sciowe}
+Użytkownik w menu głównym może zadeklarować wymagane parametry więzienia:
+
+\begin{itemize}
+	\item Parametry wielkości budynku\par
+
+	\item Ilość prycz \par
+	
+	\item Cena pojedynczej pryczy \par
+	
+	\item Zasięg kamery \par
+	
+	\item Ilość pokoleń \par
+
+\end{itemize}\par
+
+\subsection{Dane wyj\'sciowe}
+Program nie zwraca \.zadnych danych. U\.zytkownik zostaje poinformowany o~otrzymanym wyniku na ekranie monitora\par
+
+\section{SCENARIUSZ DZIA\L{}ANIA PROGRAMU}
+
+\subsection{Scenariusz og\'olny}
+U\.zytkownik w\l{}\k{a}cza program. W menu głównym wprowadza swoje zmiany do parametrów domyślnych ZP i klika przycisk "Generuj". Na ekranie monitora zostają wyswietlone jedno po drugim najlepsze schematy z danego pokolenia algorytmu genetycznego wraz z ich kosztorysami. Po zakończeniu działania algorytmu na ekranie będzie wyświetlony optymalny projekt ZP, wraz z kosztorysem oraz przycisk powrotu do menu głównego.
+\par
+
+\subsection{Scenariusz szczeg\'o\l{}owy}
+\subsubsection{Uruchomienie}
+Zostanie wy\'swietlone menu g\l{}\'owne programu.Użytkownik wprowadza swoje zaminy do domyślnych parametrów
+\subsubsection{Uruchomienie algorytmu genetycznego}
+Powstaje klasa obsługujaca algorytm genetyczny. Powstaje pierwsze pokolenie schematów ZP, które zostaje poddane ocenie.\par
+\subsubsection{Wyświetlenie wyniku}
+Na ekranie zostaje wyświetlony najlepszy osobnik z pierwszego pokolenia \par
+\subsubsection{Obsługa kolejnych pokoleń}
+Z poprzedniego pokolenia wybierane są najlepsze osobniki, które zostaje skrzyżowane w celu ponownego zaludnienia populacji. Osobniki zostają poddane losowej mutacji. Tak powstałe osobniki stają się kolejnym pokoleniem i zostają poddane ocenie, a najlepszy osobnik zostaje wyświetlony na ekranie \par
+\subsubsection{Zakończenie działania}
+Na ekranie jest wyświetlony najlepszy osobnik, ostatniego pokolenia. Uzytkownik dostaje mozliwość powrotu do menu głównego. \par
+
+\subsection{Scenariusz przypadku szczeg\'olnego}
+Po zakończeniu działania algorytmu genetycznego nie powstanie ani jeden osobnik spełniający założenia początkowe. Uzytkownik zostaje poinformowany o takim wyniku na ekranie.
+
+\section{TESTOWANIE}
+\subsection{Og\'olny przebieg testowania}
+???
+
+\end{document}
