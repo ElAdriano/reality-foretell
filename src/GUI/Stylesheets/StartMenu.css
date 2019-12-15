@@ -1,0 +1,4 @@
+.backgroundStartMenu{
+	-fx-background-image: url("../Backgrounds/StartMenuBackground.png");
+	-fx-background-size: 100% 100%;
+}

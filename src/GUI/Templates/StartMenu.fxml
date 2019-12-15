@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.Scene?>
-<?import javafx.stage.Stage?>
-<Stage fx:id="primaryStage" height="400.0" iconified="true" resizable="false" title="RealityForetell" width="600.0"
-       xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-       fx:controller="GUI.Controllers.StartMenu">
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+
+<Stage fx:id="primaryStage" height="400.0" iconified="true" resizable="false" title="RealityForetell" width="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.StartMenu">
     <scene>
         <Scene fx:id="scene">
-            <AnchorPane prefHeight="400.0" prefWidth="600.0">
+            <AnchorPane id="backgroundStartMenu" prefHeight="400.0" prefWidth="600.0" styleClass="backgroundStartMenu" stylesheets="@../Stylesheets/StartMenu.css">
                 <children>
-                    <Button fx:id="startButton" layoutX="224.0" layoutY="200.0" mnemonicParsing="false"
-                            onAction="#onStartButtonClick" prefHeight="47.0" prefWidth="152.0"
-                            text="Create new scheme"/>
-                    <Button fx:id="quitButton" layoutX="224.0" layoutY="264.0" mnemonicParsing="false"
-                            onAction="#onQuitButtonClick" prefHeight="30.0" prefWidth="152.0"
-                            text="Quit"/>
+                    <Button fx:id="startButton" layoutX="224.0" layoutY="200.0" mnemonicParsing="false" onAction="#onStartButtonClick" prefHeight="47.0" prefWidth="152.0" text="Create new scheme" />
+                    <Button fx:id="quitButton" layoutX="224.0" layoutY="264.0" mnemonicParsing="false" onAction="#onQuitButtonClick" prefHeight="30.0" prefWidth="152.0" text="Quit" />
                 </children>
             </AnchorPane>
         </Scene>

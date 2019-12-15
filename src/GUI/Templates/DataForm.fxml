@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.Scene?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.stage.Stage?>
-<Stage fx:id="renderedStage" height="400.0" iconified="true" resizable="false" title="RealityForetell" width="600.0"
-       xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-       fx:controller="GUI.Controllers.DataForm">
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+
+<Stage fx:id="renderedStage" height="400.0" iconified="true" resizable="false" title="RealityForetell" width="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.DataForm">
     <scene>
         <Scene fx:id="scene">
             <AnchorPane prefHeight="400.0" prefWidth="600.0">
                 <children>
-                    <Button layoutX="224.0" layoutY="264.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="152.0"
-                            text="Form for input data"/>
-                    <Circle fx:id="backButtonCircle" fill="WHITE" layoutX="30.0" layoutY="26.0"
-                            onMouseClicked="#onBackButtonClick" radius="19.0" stroke="BLACK" strokeType="INSIDE"/>
-                    <Polygon fill="DODGERBLUE" layoutX="34.0" layoutY="77.0" onMouseClicked="#onBackButtonClick"
-                             points="-15.0, -50.0, 0.0, -42.0, 0.0, -60.0" stroke="DODGERBLUE" strokeType="INSIDE"/>
+                    <CheckBox fx:id="cameraCheckbox" layoutX="46.0" layoutY="166.0" mnemonicParsing="false" onAction="#onCameraCheckboxClick" />
+                    <Label layoutX="45.0" layoutY="135.0" prefHeight="21.0" prefWidth="131.0" text="Camera cost (PLN)" />
+                    <TextArea fx:id="cameraPriceInput" disable="true" layoutX="78.0" layoutY="156.0" prefHeight="40.0" prefWidth="99.0" />
+
+                    <CheckBox fx:id="windowCheckbox" layoutX="46.0" layoutY="258.0" mnemonicParsing="false" onAction="#onWindowCheckboxClick" />
+                    <Label layoutX="46.0" layoutY="225.0" prefHeight="21.0" prefWidth="131.0" text="Window cost (PLN)" />
+                    <TextArea fx:id="windowPriceInput" disable="true" layoutX="78.0" layoutY="246.0" prefHeight="40.0" prefWidth="99.0" />
+               <Slider layoutX="300.0" layoutY="121.0" />
                 </children>
             </AnchorPane>
         </Scene>
