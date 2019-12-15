@@ -6,6 +6,7 @@
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage[section]{placeins}
+\usepackage{amsmath}
 
 \title{Specyfikacja implementacyjna - RealityForetell}
 \author{Adrian Bączek, Łukasz Leszczyński}
@@ -17,6 +18,12 @@
 
 \begin{document}
 	\maketitle
+	
+	\begin{center}
+		\begin{figure}[!ht]
+			\includegraphics[width=0.9\columnwidth]{RealityForetell.png}
+		\end{figure}
+	\end{center}
 	
 	\rfoot{
 		\begin{flushright}
@@ -114,5 +121,86 @@
 	\end{figure}
 	
 	\section{Rozwiązanie zadania}
+	Rozwiązanie poruszanego w projekcie problemu opiera się o algorytmy ewolucyjne. W paragrafie tym opisane zostały sposoby implementacji wymienionych poniżej metod koniecznych do poprawnego działania programu.
+	\begin{description}
+		\item[generateSchemes] - metoda, w której odbywa się inicjalizacja generatora schematów. Jako parametr przyjmuje instancję klasy ,,Conditions" zawierającą warunki jakie powinien spełnić stworzony projekt zakładu penitencjarnego. Otrzymany osobnik zapisywany jest do prywatnej listy ,,bestIndividualsInEachIteration".
+		
+		\item[getEvolvedIterations] - metoda dostępowa do prywatnego atrybutu - listy ,,bestIndividualsInEachIteration".
+		
+		\item[makeCrossingOver] - metoda wykonująca operacje krzyżowania dwóch podanych jako parametry osobników.
+		
+		\item[getBestIndividualInPopulation] - metoda znajdująca najlepszego osobnika z listy otrzymanej jako parametr wywołania. W celu tym korzysta z współczynnika jakości otrzymanego z metody ,,rateIndividual". Działanie jej opiera się o dwukrotną iterację po otrzymanej jako parametr populacji. W~pierwszym przebiegu tworzona jest lista par (pierwszym elementem jest indeks osobnika w otrzymanej populacji, natomiast drugim współczynnik otrzymany po jego ocenie). Najlepszego osobnika otrzymujemy po zakończeniu drugiej iteracji po stworzonej wewnątrz liście pomocniczej.
+		
+		\item[createNextGeneration] - metoda generująca następne pokolenie na bazie otrzymanej listy najlepszych 14 osobników z poprzedniej generacji. Nowy zbiór rozważanych schematów jest tworzony poprzez krzyżowanie jednostek podanych jako parametr na zasadzie ,,każdy z każdym". Do wykonania krzyżowania służy metoda ,,makeCrossingOver".
+		Otrzymane w ten sposób nowe pokolenie jest zwracane jako lista ,,PrisonScheme".
+		
+		\item[filterTopIndividuals] - metoda filtrująca populację (typu List$<$PrisonScheme$>$) otrzymaną jako parametr. Działanie jej przedstawia się następująco :
+		\begin{enumerate}
+			\item Tworzymy listę par $<$W, O$>$, \newline przy czym : 
+			\begin{description}
+				\item[W] - współczynnik jakości otrzymanym dla danego osobnika z metody ,,rateIndividual",
+				\item[O] - odpowiednim osobnikiem z listy podanej jako parametr.
+			\end{description} 
+			
+			\item Sortujemy nierosnąco utworzoną listę par względem jej pierwszego elementu.
+			\item Tworzymy listę osobników, która będzie zwrócona i przepisujemy do niej 14 początkowych schematów z pomocniczej listy.
+			\item Zwracamy wynikową listę najlepszych osobników.
+		\end{enumerate}
+	
+		\item[rateIndividual] - metoda wyznaczająca współczynnik jakości otrzymanego jako parametr planu zakładu penitencjarnego. Wyliczanie współczynnika opierać się będzie na ustalonych wcześniej wagach komponentów schematu, powierzchnii zajmowanych pomieszczeń (dla pryczy więziennej, pokoju monitorowania oraz kącika sanitarnego), zakresu widoczności kamery, ilości i koszcie użytych komponentów (drzwi, okna, oświetlenie oraz kamera).
+		Dla poszczególnych komponentów projektu ustalone zostały następujące wagi:
+		\begin{center}
+			\begin{tabular}{|c|c|} \hline
+				Komponent & Waga \\ \hline
+				Door & $\frac{1}{3}$
+				\\[10pt] Camera & $\frac{3}{4}$
+				\\[10pt] LightBulb & $\frac{1}{3}$
+				\\[10pt] Window & $\frac{1}{4}$
+				\\[10pt] SanitaryNook & $\frac{1}{2}$
+				\\[10pt] MonitoringRoom & $\frac{1}{2}$
+				\\[10pt] PrisonWard & 1 \\ \hline
+			\end{tabular}
+		\end{center}
+		W celu wyznaczenia współczynnika jakości wprowadzane zostają pomocnicze 4 parametry.
+		\begin{itemize}
+			\item parametr ,,a" - wyliczany wyłącznie na dla komponentów : ,,Door", ,,Window". Wyznaczany jest na podstawie wzoru :
+			\begin{center}
+				$\frac{\text{waga komponentu * liczebność komponentu w planie zakładu * cena komponentu}}{\text{liczba prycz więziennych + 2}}$
+			\end{center}
+		
+			\item parametr ,,b" - wyliczany wyłącznie na dla komponentów : ,,SanitaryNook" oraz ,,MonitoringRoom". Wyznaczany jest na podstawie wzoru :
+			\begin{center}
+				$\frac{\text{waga komponentu * sumaryczna powierzchnia komponentów tego samego rodzaju}}{\text{powierzchnia zakładu penitencjarnego}}$
+			\end{center}
+		
+			\item parametr ,,c" - wyliczany wyłącznie na dla komponentu ,,Camera". Wyznaczany jest na podstawie wzoru :
+			\begin{center}
+				$\frac{\text{waga komponentu * zasięg widoczności kamery * cena pojedynczej kamery}}{\text{powierzchnia zakładu penitencjarnego}}$
+			\end{center}
+		
+			\item parametr ,,d" - wyliczany wyłącznie na dla komponentu ,,PrisonWard". Wyznaczany jest na podstawie wzoru :
+			\begin{center}
+				$\frac{\text{waga komponentu * sumaryczna powierzchnia prycz * cena pojedynczej pryczy}}{\text{powierzchnia zakładu penitencjarnego}}$
+			\end{center}
+		
+			Zwracany współczynnik jakości będzie średnią kwadratową składowych współczynników zależących od komponentów tj.
+			\begin{center}
+				współczynnik jakości = $\sqrt{\frac{a_{D}^{2} + a_{LB}^{2} + a_{W}^{2} + b_{SN}^{2} + b_{MR}^{2} + c_{C}^{2} + d_{PW}^{2}}{7}}$
+			\end{center}
+			przy czym : 
+			\begin{description}
+				\item[$a_{D}^{2}$] - kwadrat współczynnika ,,a" wyliczony dla komponentu ,,Door",
+				\item[$a_{LB}^{2}$] - kwadrat współczynnika ,,a" wyliczony dla komponentu ,,LightBulb",
+				\item[$a_{W}^{2}$] - kwadrat współczynnika ,,a" wyliczony dla komponentu ,,Window",
+				\item[$b_{SN}^{2}$] - kwadrat współczynnika ,,b" wyliczony dla komponentu ,,SanitaryNook",
+				\item[$b_{MR}^{2}$] - kwadrat współczynnika ,,b" wyliczony dla komponentu ,,MonitoringRoom",
+				\item[$c_{C}^{2}$] - kwadrat współczynnika ,,c" wyliczony dla komponentu ,,Camera",
+				\item[$d_{PW}^{2}$] - kwadrat współczynnika ,,d" wyliczony dla komponentu ,,PrisonWard"
+			\end{description}
+		
+		
+		\end{itemize}
+		
+	\end{description}
 	
 \end{document}
