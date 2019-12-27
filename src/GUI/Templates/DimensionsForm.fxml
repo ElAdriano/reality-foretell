@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+
+<Stage fx:id="renderedStage" height="421.0" iconified="true" resizable="false" title="RealityForetell" width="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.DimensionsForm">
+    <scene>
+        <Scene fx:id="scene">
+            <AnchorPane prefHeight="421.0" prefWidth="600.0" styleClass="background" stylesheets="@../Stylesheets/DataForm.css">
+                <children>
+                    <Pane layoutX="30.0" layoutY="36.0" prefHeight="362.0" prefWidth="201.0" styleClass="formComponent">
+                        <children>
+                            <Label alignment="CENTER" layoutX="17.0" layoutY="32.0" prefHeight="17.0" prefWidth="113.0" text="Wymiar ściany A" />
+                            <Label fx:id="aDimensionMonitor" alignment="CENTER" layoutX="147.0" layoutY="51.0" prefHeight="17.0" prefWidth="63.0" text="0" />
+                            <Slider fx:id="aDimensionSlider" layoutX="14.0" layoutY="51.0" max="175.0" min="65.0" prefHeight="37.0" prefWidth="133.0" showTickLabels="true" showTickMarks="true" value="120.0" />
+                            <Slider fx:id="bDimensionSlider" layoutX="14.0" layoutY="135.0" max="175.0" min="65.0" prefHeight="37.0" prefWidth="133.0" showTickLabels="true" showTickMarks="true" value="120.0" />
+                            <Slider fx:id="cDimensionSlider" layoutX="14.0" layoutY="218.0" max="115.0" min="5.0" prefHeight="37.0" prefWidth="133.0" showTickLabels="true" showTickMarks="true" value="60.0" />
+                            <Slider fx:id="dDimensionSlider" layoutX="14.0" layoutY="301.0" max="115.0" min="5.0" prefHeight="37.0" prefWidth="133.0" showTickLabels="true" showTickMarks="true" value="60.0" />
+                            <Label layoutX="24.0" layoutY="118.0" prefHeight="17.0" prefWidth="113.0" text="Wymiar ściany B" />
+                            <Label fx:id="bDimensionMonitor" alignment="CENTER" layoutX="147.0" layoutY="135.0" prefHeight="17.0" prefWidth="63.0" text="0" />
+                            <Label layoutX="24.0" layoutY="200.0" prefHeight="17.0" prefWidth="113.0" text="Wymiar ściany C" />
+                            <Label fx:id="cDimensionMonitor" alignment="CENTER" layoutX="147.0" layoutY="219.0" prefHeight="17.0" prefWidth="63.0" text="0" />
+                            <Label layoutX="27.0" layoutY="284.0" prefHeight="17.0" prefWidth="113.0" text="Wymiar ściany D" />
+                            <Label fx:id="dDimensionMonitor" alignment="CENTER" layoutX="147.0" layoutY="303.0" prefHeight="17.0" prefWidth="63.0" text="0" />
+                        </children>
+                    </Pane>
+                    <Button fx:id="startProcessButton" layoutX="487.0" layoutY="351.0" mnemonicParsing="false" onAction="#onStartProcessButtonClick" prefHeight="47.0" prefWidth="89.0" text="Generuj" />
+               <Pane layoutX="268.0" layoutY="39.0" prefHeight="286.0" prefWidth="299.0" styleClass="formPrisonSketchBackground">
+                  <children>
+                     <Pane fx:id="PrisonBuilding" layoutX="90.0" layoutY="83.0" prefHeight="120.0" prefWidth="120.0" styleClass="formPrisonSketch">
+                        <children>
+                           <Pane fx:id="OutSidePrisonBuilding" layoutX="60.0" maxHeight="115.0" maxWidth="115.0" prefHeight="60.0" prefWidth="60.0" styleClass="formPrisonSketchBackground" />
+                        </children>
+                     </Pane>
+                  </children></Pane>
+                </children>
+            </AnchorPane>
+        </Scene>
+    </scene>
+</Stage>
