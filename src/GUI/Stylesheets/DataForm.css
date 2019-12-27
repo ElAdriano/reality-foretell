@@ -1,0 +1,17 @@
+.background{
+    -fx-background-image: url("../Backgrounds/BlueBackground.png");
+}
+
+.formComponent{
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.formPrisonSketch{
+    -fx-background-color: white;
+}
+
+.formPrisonSketchBackground{
+    -fx-background-color: gray;
+}
