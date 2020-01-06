@@ -1,44 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.stage.*?>
-
-<Stage fx:id="renderedStage" height="421.0" iconified="true" resizable="false" title="RealityForetell" width="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.DataForm">
+<?import javafx.scene.Scene?>
+<?import javafx.stage.Stage?>
+<Stage fx:id="renderedStage" height="421.0" iconified="true" resizable="false" title="RealityForetell" width="600.0"
+       xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+       fx:controller="GUI.Controllers.DataForm">
     <scene>
         <Scene fx:id="scene">
-            <AnchorPane prefHeight="421.0" prefWidth="600.0" styleClass="background" stylesheets="@../Stylesheets/DataForm.css">
+            <AnchorPane prefHeight="421.0" prefWidth="600.0" styleClass="background"
+                        stylesheets="@../Stylesheets/DataForm.css">
                 <children>
-               <Pane layoutX="23.0" layoutY="332.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-               <Pane layoutX="314.0" layoutY="228.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-               <Pane layoutX="314.0" layoutY="125.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-               <Pane layoutX="314.0" layoutY="20.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-               <Pane layoutX="23.0" layoutY="228.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-               <Pane layoutX="23.0" layoutY="125.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-                    <Label fx:id="amountOfPrisonersLabel" alignment="CENTER" layoutX="42.0" layoutY="129.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Liczba więźniów" />
-                    <Slider fx:id="amountOfPrisonersSlider" layoutX="42.0" layoutY="150.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Slider fx:id="priceOfPrisonWardSlider" layoutX="42.0" layoutY="254.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Slider fx:id="maxPrisonersAmountSlider" layoutX="42.0" layoutY="358.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Slider fx:id="priceOfSanitaryNookSlider" layoutX="329.0" layoutY="254.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Slider fx:id="cameraRangeSlider" layoutX="329.0" layoutY="46.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Slider fx:id="generationsAmountSlider" layoutX="329.0" layoutY="150.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Label fx:id="priceOfPrisonWardLabel" alignment="CENTER" layoutX="42.0" layoutY="233.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Cena pojedynczej pryczy" />
-                    <Label fx:id="maxPrisonersAmountLabel" alignment="CENTER" layoutX="42.0" layoutY="337.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Maksymalna liczba więźniów w pryczy" />
-                    <Label fx:id="priceOfSanitaryNookLabel" alignment="CENTER" layoutX="329.0" layoutY="233.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Cena kącika sanitarnego" />
-                    <Label fx:id="cameraRangeLabel" alignment="CENTER" layoutX="329.0" layoutY="25.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Zasięg kamery" />
-                    <Label fx:id="generationsAmountLabel" alignment="CENTER" layoutX="329.0" layoutY="129.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Ilość generacji" />
-                    <Label fx:id="amountOfPrisonersMonitor" alignment="CENTER" layoutX="218.0" layoutY="150.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" />
-                    <Label fx:id="priceOfPrisonWardMonitor" alignment="CENTER" layoutX="218.0" layoutY="254.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" />
-                    <Label fx:id="maxPrisonersAmountMonitor" alignment="CENTER" layoutX="218.0" layoutY="358.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" />
-                    <Label fx:id="priceOfSanitaryNookMonitor" alignment="CENTER" layoutX="504.0" layoutY="254.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" />
-                    <Label fx:id="cameraRangeMonitor" alignment="CENTER" layoutX="504.0" layoutY="46.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" />
-                    <Label fx:id="generationsAmountMonitor" alignment="CENTER" layoutX="504.0" layoutY="150.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" />
-                    <Button fx:id="nextPageButton" layoutX="379.0" layoutY="344.0" mnemonicParsing="false" onAction="#onNextPageButtonClick" prefHeight="45.0" prefWidth="136.0" text="Dalej" />
-               <Pane layoutX="23.0" layoutY="20.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent" />
-                    <Label fx:id="maxBudgetLabel" alignment="CENTER" layoutX="42.0" layoutY="25.0" prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Maksymalny budżet (PLN)" textAlignment="CENTER" />
-                    <Slider fx:id="maxBudgetSlider" blockIncrement="200.0" layoutX="42.0" layoutY="46.0" majorTickUnit="10000.0" max="100000.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true" styleClass="formComponent" />
-                    <Label fx:id="maxBudgetMonitor" alignment="CENTER" layoutX="218.0" layoutY="46.0" prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="0" textAlignment="CENTER" />
+                    <Pane layoutX="23.0" layoutY="332.0" prefHeight="70.0" prefWidth="266.0"
+                          styleClass="formComponent"/>
+                    <Pane layoutX="314.0" layoutY="228.0" prefHeight="70.0" prefWidth="266.0"
+                          styleClass="formComponent"/>
+                    <Pane layoutX="314.0" layoutY="125.0" prefHeight="70.0" prefWidth="266.0"
+                          styleClass="formComponent"/>
+                    <Pane layoutX="314.0" layoutY="20.0" prefHeight="70.0" prefWidth="266.0"
+                          styleClass="formComponent"/>
+                    <Pane layoutX="23.0" layoutY="228.0" prefHeight="70.0" prefWidth="266.0"
+                          styleClass="formComponent"/>
+                    <Pane layoutX="23.0" layoutY="125.0" prefHeight="70.0" prefWidth="266.0"
+                          styleClass="formComponent"/>
+                    <Label fx:id="amountOfPrisonersLabel" alignment="CENTER" layoutX="42.0" layoutY="129.0"
+                           prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Liczba więźniów"/>
+                    <Slider fx:id="amountOfPrisonersSlider" blockIncrement="1.0" layoutX="42.0" layoutY="150.0"
+                            max="150.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true"
+                            styleClass="formComponent" value="75.0"/>
+                    <Slider fx:id="priceOfPrisonWardSlider" layoutX="42.0" layoutY="254.0" majorTickUnit="1000.0"
+                            max="10000.0" prefHeight="38.0" prefWidth="168.0" showTickLabels="true" showTickMarks="true"
+                            styleClass="formComponent" value="5000.0"/>
+                    <Slider fx:id="maxPrisonersAmountSlider" blockIncrement="1.0" layoutX="42.0" layoutY="358.0"
+                            majorTickUnit="2.0" max="10.0" minorTickCount="1" prefHeight="38.0" prefWidth="168.0"
+                            showTickLabels="true" showTickMarks="true" styleClass="formComponent" value="5.0"/>
+                    <Slider fx:id="priceOfSanitaryNookSlider" layoutX="329.0" layoutY="254.0" majorTickUnit="1000.0"
+                            max="10000.0" minorTickCount="5" prefHeight="38.0" prefWidth="168.0" showTickLabels="true"
+                            showTickMarks="true" styleClass="formComponent" value="5000.0"/>
+                    <Slider fx:id="cameraRangeSlider" blockIncrement="1.0" layoutX="329.0" layoutY="46.0"
+                            majorTickUnit="5.0" max="20.0" minorTickCount="1" prefHeight="38.0" prefWidth="168.0"
+                            showTickLabels="true" showTickMarks="true" styleClass="formComponent" value="10.0"/>
+                    <Slider fx:id="generationsAmountSlider" blockIncrement="1.0" layoutX="329.0" layoutY="150.0"
+                            majorTickUnit="10.0" max="50.0" minorTickCount="1" prefHeight="38.0" prefWidth="168.0"
+                            showTickLabels="true" showTickMarks="true" styleClass="formComponent" value="25.0"/>
+                    <Label fx:id="priceOfPrisonWardLabel" alignment="CENTER" layoutX="42.0" layoutY="233.0"
+                           prefHeight="21.0" prefWidth="168.0" styleClass="formComponent"
+                           text="Cena pojedynczej pryczy"/>
+                    <Label fx:id="maxPrisonersAmountLabel" alignment="CENTER" layoutX="42.0" layoutY="337.0"
+                           prefHeight="21.0" prefWidth="168.0" styleClass="formComponent"
+                           text="Maks. liczba więźniów w pryczy"/>
+                    <Label fx:id="priceOfSanitaryNookLabel" alignment="CENTER" layoutX="329.0" layoutY="233.0"
+                           prefHeight="21.0" prefWidth="168.0" styleClass="formComponent"
+                           text="Cena kącika sanitarnego"/>
+                    <Label fx:id="cameraRangeLabel" alignment="CENTER" layoutX="329.0" layoutY="25.0" prefHeight="21.0"
+                           prefWidth="168.0" styleClass="formComponent" text="Zasięg kamery"/>
+                    <Label fx:id="generationsAmountLabel" alignment="CENTER" layoutX="329.0" layoutY="129.0"
+                           prefHeight="21.0" prefWidth="168.0" styleClass="formComponent" text="Ilość generacji"/>
+                    <Label fx:id="amountOfPrisonersMonitor" alignment="CENTER" layoutX="218.0" layoutY="150.0"
+                           prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="75"/>
+                    <Label fx:id="priceOfPrisonWardMonitor" alignment="CENTER" layoutX="218.0" layoutY="254.0"
+                           prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="5000"/>
+                    <Label fx:id="maxPrisonersAmountMonitor" alignment="CENTER" layoutX="218.0" layoutY="358.0"
+                           prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="5"/>
+                    <Label fx:id="priceOfSanitaryNookMonitor" alignment="CENTER" layoutX="504.0" layoutY="254.0"
+                           prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="5000"/>
+                    <Label fx:id="cameraRangeMonitor" alignment="CENTER" layoutX="504.0" layoutY="46.0"
+                           prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="10"/>
+                    <Label fx:id="generationsAmountMonitor" alignment="CENTER" layoutX="504.0" layoutY="150.0"
+                           prefHeight="17.0" prefWidth="71.0" styleClass="formComponent" text="25"/>
+                    <Button fx:id="nextPageButton" layoutX="379.0" layoutY="344.0" mnemonicParsing="false"
+                            onAction="#onNextPageButtonClick" prefHeight="45.0" prefWidth="136.0" text="Dalej"/>
+                    <Pane layoutX="23.0" layoutY="20.0" prefHeight="70.0" prefWidth="266.0" styleClass="formComponent"/>
+                    <Label fx:id="maxBudgetLabel" alignment="CENTER" layoutX="42.0" layoutY="25.0" prefHeight="21.0"
+                           prefWidth="168.0" styleClass="formComponent" text="Maksymalny budżet (PLN)"
+                           textAlignment="CENTER"/>
+                    <Slider fx:id="maxBudgetSlider" blockIncrement="200.0" layoutX="42.0" layoutY="46.0"
+                            majorTickUnit="10000.0" max="100000.0" prefHeight="38.0" prefWidth="168.0"
+                            showTickLabels="true" showTickMarks="true" styleClass="formComponent" value="50000.0"/>
+                    <Label fx:id="maxBudgetMonitor" alignment="CENTER" layoutX="218.0" layoutY="46.0" prefHeight="17.0"
+                           prefWidth="71.0" styleClass="formComponent" text="50000" textAlignment="CENTER"/>
                 </children>
             </AnchorPane>
         </Scene>

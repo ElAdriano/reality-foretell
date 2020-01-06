@@ -9,14 +9,14 @@
        fx:controller="GUI.Controllers.StartMenu">
     <scene>
         <Scene fx:id="scene">
-            <AnchorPane id="backgroundStartMenu" prefHeight="421.0" prefWidth="600.0" styleClass="backgroundStartMenu"
+            <AnchorPane id="backgroundStartMenu" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                        minWidth="-Infinity" prefHeight="421.0" prefWidth="600.0" styleClass="backgroundStartMenu"
                         stylesheets="@../Stylesheets/StartMenu.css">
                 <children>
                     <Button fx:id="startButton" layoutX="224.0" layoutY="200.0" mnemonicParsing="false"
-                            onAction="#onStartButtonClick" prefHeight="47.0" prefWidth="152.0"
-                            text="Create new scheme"/>
+                            onAction="#onStartButtonClick" prefHeight="47.0" prefWidth="152.0" text="Nowy projekt"/>
                     <Button fx:id="quitButton" layoutX="224.0" layoutY="264.0" mnemonicParsing="false"
-                            onAction="#onQuitButtonClick" prefHeight="30.0" prefWidth="152.0" text="Quit"/>
+                            onAction="#onQuitButtonClick" prefHeight="30.0" prefWidth="152.0" text="Wyjście"/>
                 </children>
             </AnchorPane>
         </Scene>
