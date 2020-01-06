@@ -1,0 +1,15 @@
+.background{
+    -fx-background-image: url("../Backgrounds/BlueBackground.png");
+}
+
+.schemePresenter{
+    -fx-background-color: white;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.generationNumberPresenter{
+    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}

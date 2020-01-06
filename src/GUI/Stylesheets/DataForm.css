@@ -15,3 +15,22 @@
 .formPrisonSketchBackground{
     -fx-background-color: gray;
 }
+
+.dimensionProTipWindow{
+    -fx-background-color: rgba(61, 43, 31, 1);
+    -fx-background-radius: 10px;
+}
+
+.dimensionTipImageFrame{
+    -fx-background-color: gray;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.dimensionProTipImagePlace{
+    -fx-background-image: url("../Backgrounds/ProTipImage.png");
+}
+
+.backArrowFunctionalButton{
+    -fx-background-color: transparent;
+}
