@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -16,7 +17,7 @@ public class StartMenu {
     private Button quitButton;
 
     @FXML
-    private void onStartButtonClick(javafx.event.ActionEvent actionEvent) {
+    private void onStartButtonClick(ActionEvent actionEvent) {
         Stage nextStage = null;
         try {
             nextStage = FXMLLoader.load(getClass().getResource("../Templates/DataForm.fxml"));
@@ -25,8 +26,6 @@ public class StartMenu {
             System.exit(0);
         }
         Stage renderedStage = (Stage) startButton.getScene().getWindow();
-
-        renderedStage.setTitle(nextStage.getTitle());
         renderedStage.setScene(nextStage.getScene());
     }
 
