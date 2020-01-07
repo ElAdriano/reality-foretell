@@ -1,6 +1,5 @@
 package GUI.Controllers;
 
-import Management.Conditions;
 import Management.SchemeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,25 +58,27 @@ public class DataForm {
         setListener(maxBudgetSlider, maxBudgetMonitor, costFormat);
         setListener(amountOfPrisonersSlider, amountOfPrisonersMonitor, amountFormat);
         setListener(priceOfPrisonWardSlider, priceOfPrisonWardMonitor, costFormat);
+
         setListener(maxPrisonersAmountSlider, maxPrisonersAmountMonitor, amountFormat);
+
         setListener(priceOfSanitaryNookSlider, priceOfSanitaryNookMonitor, costFormat);
         setListener(cameraRangeSlider, cameraRangeMonitor, costFormat);
         setListener(generationsAmountSlider, generationsAmountMonitor, amountFormat);
     }
 
     private void getEnteredDataFromCache() {
-        setSliderValue(maxBudgetSlider, maxBudgetMonitor, SchemeGenerator.conditions.budget, costFormat);
-        setSliderValue(amountOfPrisonersSlider, amountOfPrisonersMonitor, SchemeGenerator.conditions.amountOfPrisoners, amountFormat);
-        setSliderValue(priceOfPrisonWardSlider, priceOfPrisonWardMonitor, SchemeGenerator.conditions.priceOfPrisonWard, costFormat);
-        setSliderValue(maxPrisonersAmountSlider, maxPrisonersAmountMonitor, SchemeGenerator.conditions.maxAmountOfPrisonersInPrisonWard, amountFormat);
-        setSliderValue(priceOfSanitaryNookSlider, priceOfSanitaryNookMonitor, SchemeGenerator.conditions.priceOfSanitaryNook, costFormat);
-        setSliderValue(cameraRangeSlider, cameraRangeMonitor, SchemeGenerator.conditions.cameraRange, costFormat);
-        setSliderValue(generationsAmountSlider, generationsAmountMonitor, SchemeGenerator.conditions.amountOfGenerations, amountFormat);
+        loadValues(maxBudgetSlider, maxBudgetMonitor, SchemeGenerator.conditions.budget, costFormat);
+        loadValues(amountOfPrisonersSlider, amountOfPrisonersMonitor, SchemeGenerator.conditions.amountOfPrisoners, amountFormat);
+        loadValues(priceOfPrisonWardSlider, priceOfPrisonWardMonitor, SchemeGenerator.conditions.priceOfPrisonWard, costFormat);
+        loadValues(maxPrisonersAmountSlider, maxPrisonersAmountMonitor, SchemeGenerator.conditions.maxAmountOfPrisonersInPrisonWard, amountFormat);
+        loadValues(priceOfSanitaryNookSlider, priceOfSanitaryNookMonitor, SchemeGenerator.conditions.priceOfSanitaryNook, costFormat);
+        loadValues(cameraRangeSlider, cameraRangeMonitor, SchemeGenerator.conditions.cameraRange, costFormat);
+        loadValues(generationsAmountSlider, generationsAmountMonitor, SchemeGenerator.conditions.amountOfGenerations, amountFormat);
     }
 
-    private void setSliderValue(Slider slider, Label monitor, double value, DecimalFormat textFormat) {
+    private void loadValues(Slider slider, Label monitor, double value, DecimalFormat textFormat) {
         double valueToSetForSlider = value;
-        if (valueToSetForSlider == 0) {
+        if (valueToSetForSlider == -1) {
             valueToSetForSlider = (slider.getMin() + slider.getMax()) / 2;
         }
         slider.setValue(valueToSetForSlider);
@@ -85,7 +86,14 @@ public class DataForm {
     }
 
     private void setListener(Slider slider, Label monitor, DecimalFormat costFormat) {
-        slider.valueProperty().addListener((observable, oldValue, newValue) -> monitor.setText(costFormat.format(newValue)));
+        if (!slider.equals(maxPrisonersAmountSlider)) {
+            slider.valueProperty().addListener((observable, oldValue, newValue) -> monitor.setText(costFormat.format(newValue)));
+        } else {
+            slider.valueProperty().addListener((observable, oldValue, newValue) -> {
+                monitor.setText(costFormat.format(newValue));
+                slider.setValue(Math.round((double) newValue));
+            });
+        }
     }
 
     @FXML
@@ -94,7 +102,7 @@ public class DataForm {
 
         Stage nextStage = null;
         try {
-            nextStage = FXMLLoader.load(getClass().getResource("../Templates/DimensionsForm.fxml"));
+            nextStage = FXMLLoader.load(getClass().getResource("/GUI/Templates/DimensionsForm.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
@@ -104,8 +112,6 @@ public class DataForm {
     }
 
     private void saveSlidersData() {
-        SchemeGenerator.conditions = new Conditions();
-
         SchemeGenerator.conditions.budget = Math.round(100.0 * maxBudgetSlider.getValue()) / 100.0;
         SchemeGenerator.conditions.amountOfPrisoners = (int) Math.round(amountOfPrisonersSlider.getValue());
         SchemeGenerator.conditions.priceOfPrisonWard = Math.round(100.0 * priceOfPrisonWardSlider.getValue()) / 100.0;

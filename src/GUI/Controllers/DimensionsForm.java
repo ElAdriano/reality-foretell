@@ -18,7 +18,6 @@ import java.text.DecimalFormat;
 public class DimensionsForm {
     private final double DEFAULT_LAYOUT_Y = 83;
     private final double INITIAL_HEIGHT = 120;
-    private final double INITIAL_WIDTH = 120;
 
     /* Sliders for DimensionsForm.fxml */
     @FXML
@@ -63,8 +62,6 @@ public class DimensionsForm {
         backArrowHover = new Background(new BackgroundImage(new Image("GUI/Backgrounds/BackArrowHoverCircle.png"), null, null, null, null));
         backArrowViewIcon.setBackground(backArrowNotHover);
 
-        aDimensionSlider.setValue(INITIAL_HEIGHT);
-        aDimensionMonitor.setText(sizeFormat.format(INITIAL_HEIGHT));
         aDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             aDimensionSlider.setValue((double) newValue);
             aDimensionMonitor.setText(sizeFormat.format(newValue));
@@ -79,8 +76,6 @@ public class DimensionsForm {
             }
         });
 
-        bDimensionSlider.setValue(INITIAL_WIDTH);
-        bDimensionMonitor.setText(sizeFormat.format(INITIAL_WIDTH));
         bDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             bDimensionSlider.setValueChanging(true);
 
@@ -112,8 +107,6 @@ public class DimensionsForm {
             bDimensionSlider.setValueChanging(false);
         });
 
-        cDimensionSlider.setValue(INITIAL_HEIGHT / 2);
-        cDimensionMonitor.setText(sizeFormat.format(INITIAL_HEIGHT / 2));
         cDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!aDimensionSlider.isValueChanging()) {
                 if ((double) newValue <= OutSidePrisonBuilding.getMaxHeight()) {
@@ -125,8 +118,6 @@ public class DimensionsForm {
             }
         });
 
-        dDimensionSlider.setValue(INITIAL_WIDTH / 2);
-        dDimensionMonitor.setText(sizeFormat.format(INITIAL_WIDTH / 2));
         dDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!bDimensionSlider.isValueChanging()) {
                 if (PrisonBuilding.getWidth() - (double) newValue >= 5) {
@@ -149,11 +140,22 @@ public class DimensionsForm {
         loadValues(bDimensionSlider, bDimensionMonitor, SchemeGenerator.conditions.bDimensionOfPrison);
         loadValues(cDimensionSlider, cDimensionMonitor, SchemeGenerator.conditions.cDimensionOfPrison);
         loadValues(dDimensionSlider, dDimensionMonitor, SchemeGenerator.conditions.dDimensionOfPrison);
+
+        PrisonBuilding.setLayoutY(PrisonBuilding.getLayoutY() - (aDimensionSlider.getValue() - PrisonBuilding.getPrefHeight()) / 2);
+        PrisonBuilding.setPrefHeight(aDimensionSlider.getValue());
+
+        PrisonBuilding.setLayoutX(PrisonBuilding.getLayoutX() - (bDimensionSlider.getValue() - PrisonBuilding.getPrefWidth()) / 2);
+        PrisonBuilding.setPrefWidth(bDimensionSlider.getValue());
+
+        OutSidePrisonBuilding.setPrefHeight(cDimensionSlider.getValue());
+
+        OutSidePrisonBuilding.setPrefWidth(dDimensionSlider.getValue());
+        OutSidePrisonBuilding.setLayoutX(PrisonBuilding.getPrefWidth() - dDimensionSlider.getValue());
     }
 
     private void loadValues(Slider slider, Label monitor, double value) {
         double valueToSetForSlider = value;
-        if (valueToSetForSlider == 0) {
+        if (valueToSetForSlider == -1) {
             valueToSetForSlider = (slider.getMin() + slider.getMax()) / 2;
         }
         slider.setValue(valueToSetForSlider);
@@ -165,7 +167,7 @@ public class DimensionsForm {
         Stage nextStage = null;
         try {
             saveSlidersData();
-            nextStage = FXMLLoader.load(getClass().getResource("../Templates/ShowResults.fxml"));
+            nextStage = FXMLLoader.load(getClass().getResource("/GUI/Templates/ShowResults.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
@@ -208,10 +210,9 @@ public class DimensionsForm {
     @FXML
     public void onBackArrowButtonMouseClicked() {
         saveSlidersData();
-
         Stage nextStage = null;
         try {
-            nextStage = FXMLLoader.load(getClass().getResource("../Templates/DataForm.fxml"));
+            nextStage = FXMLLoader.load(getClass().getResource("/GUI/Templates/DataForm.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);

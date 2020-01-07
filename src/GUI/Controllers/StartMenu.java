@@ -1,5 +1,6 @@
 package GUI.Controllers;
 
+import Management.SchemeGenerator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,9 +19,11 @@ public class StartMenu {
 
     @FXML
     private void onStartButtonClick(ActionEvent actionEvent) {
+        SchemeGenerator.initStaticConditions();
+
         Stage nextStage = null;
         try {
-            nextStage = FXMLLoader.load(getClass().getResource("../Templates/DataForm.fxml"));
+            nextStage = FXMLLoader.load(getClass().getResource("/GUI/Templates/DataForm.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);
