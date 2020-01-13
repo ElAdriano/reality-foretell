@@ -24,6 +24,14 @@ public class Model {
         this.priority = priority;
     }
 
+    public void rotate() {
+        double tmpSize = sizeX;
+        sizeX = sizeY;
+        sizeY = tmpSize;
+        endX = startX + sizeX;
+        endY = startY + sizeY;
+    }
+
     public double getStartX() {
         return this.startX;
     }

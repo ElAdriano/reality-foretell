@@ -1,20 +1,8 @@
 package Models;
 
-public class Window {
-    public final double coordinateStartX;
-    public final double coordinateEndX;
+public class Window extends Model{
 
-    public final double coordinateStartY;
-    public final double coordinateEndY;
-
-    public final double price;
-    public final double priority = 0.25;
-
-    public Window(double startX, double endX, double startY, double endY, double price){
-        coordinateStartX = startX;
-        coordinateEndX = endX;
-        coordinateStartY = startY;
-        coordinateEndY = endY;
-        this.price = price;
+    public Window(double startX, double startY){
+        super(startX, 10, startY, 2, 500, 9, 0.25);
     }
 }

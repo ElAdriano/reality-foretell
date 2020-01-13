@@ -2,11 +2,7 @@ package Models;
 
 public class Door extends Model{
 
-    public Door(double startX, double endX, double startY, double endY, double price){
-        coordinateStartX = startX;
-        coordinateEndX = endX;
-        coordinateStartY = startY;
-        coordinateEndY = endY;
-        this.price = price;
+    public Door(double startX, double startY){
+        super(startX, 10, startY, 2, 100, 1, 0.33);
     }
 }

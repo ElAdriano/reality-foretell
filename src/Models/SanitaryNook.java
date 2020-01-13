@@ -1,28 +1,8 @@
 package Models;
 
-public class SanitaryNook {
-    public final double basePointCoordinateX;
-    public final double basePointCoordinateY;
-    public final double width;
-    public final double height;
+public class SanitaryNook extends ComplexModel{
 
-    public final Door door;
-    public final Camera camera;
-    public final LightBulb lightBulb;
-    public final Window window;
-
-    public final double priority = 0.5;
-
-
-    public SanitaryNook(double width, double  height, double basePointX, double basePointY, Door door, Camera camera, LightBulb lightBulb, Window window){
-        this.width = width;
-        this.height = height;
-        basePointCoordinateX = basePointX;
-        basePointCoordinateY = basePointY;
-
-        this.door = door;
-        this.camera = camera;
-        this.lightBulb = lightBulb;
-        this.window = window;
+    public SanitaryNook(double startX, double sizeX, double startY, double sizeY, Door door, Camera camera, LightBulb lightBulb, Window window){
+        super(startX, sizeX, startY, sizeY, door, camera, lightBulb, window, 5000, 12, 0.5);
     }
 }
