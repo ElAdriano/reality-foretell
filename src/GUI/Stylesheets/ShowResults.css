@@ -2,10 +2,14 @@
     -fx-background-image: url("../Backgrounds/BlueBackground.png");
 }
 
-.schemePresenter{
-    -fx-background-color: white;
+.schemePresenterBackground{
+    -fx-background-color: gray;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
+}
+
+.schemeViewPresenter{
+    -fx-graphic-size: 100% 100%;
 }
 
 .generationNumberPresenter{

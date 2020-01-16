@@ -1,15 +1,19 @@
 package Management;
 
+import Models.PrisonScheme;
+
+import java.util.ArrayList;
+
 interface GeneticAlgorithm {
 
-    Population evolve(Population populationToEvolve);
+    double rateIndividual(PrisonScheme individual);
 
-    Individual crossover(Individual individual1, Individual individual2);
+    ArrayList<PrisonScheme> filterTopIndividuals(ArrayList<PrisonScheme> population);
 
-    void mutate(Individual individual);
+    ArrayList<PrisonScheme> createNextGeneration(ArrayList<PrisonScheme> topIndividuals);
 
-    void rouletteSelection(Population population);
+    PrisonScheme getBestIndividualInPopulation(ArrayList<PrisonScheme> population);
 
-    void tournamentSelection(Population population);
+    PrisonScheme makeCrossingOver(PrisonScheme individual1, PrisonScheme individual2);
 
 }

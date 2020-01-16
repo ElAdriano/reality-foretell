@@ -1,6 +1,6 @@
 package Structures;
 
-public class Coordinates extends Object  {
+public class Coordinates extends Object{
 
     private int x;
     private int y;

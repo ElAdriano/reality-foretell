@@ -168,6 +168,7 @@ public class DimensionsForm {
         try {
             saveSlidersData();
             nextStage = FXMLLoader.load(getClass().getResource("/GUI/Templates/ShowResults.fxml"));
+
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(0);

@@ -1,8 +1,8 @@
 package Models;
 
-public class Camera extends Model{
+public class Camera extends Model {
 
-    public Camera(double x, double y){
-        super(x, 10, y, 2, 1000, 3, 0.75);
+    public Camera(double x, double y) {
+        super(x, 10, y, 2, 1000, 0.75);
     }
 }

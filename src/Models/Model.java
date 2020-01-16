@@ -9,10 +9,9 @@ public class Model {
     private double sizeY;
     private double endY;
     private double price;
-    private int imageID;
     private double priority;
 
-    public Model(double startX, double sizeX, double startY, double sizeY, double price, int imageID, double priority) {
+    public Model(double startX, double sizeX, double startY, double sizeY, double price, double priority) {
         this.startX = startX;
         this.sizeX = sizeX;
         this.endX = startX + sizeX;
@@ -20,7 +19,6 @@ public class Model {
         this.sizeY = sizeY;
         this.endY = startY + sizeY;
         this.price = price;
-        this.imageID = imageID;
         this.priority = priority;
     }
 
@@ -90,30 +88,8 @@ public class Model {
         return this.price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getImageID() {
-        return this.imageID;
-    }
-
-    public void setImageID(int imageID) {
-        this.imageID = imageID;
-    }
-
     public double getPriority() {
         return this.priority;
-    }
-
-    public void setPriority(double priority) {
-        this.priority = priority;
-    }
-
-    @Override
-    public String toString() {
-        return "x=[" + startX + ", " + endX + "], y=[" + startY + ", " + endY + "], price=" + price + ", imageID=" +
-                + imageID + ", priority=" + priority;
     }
 
 }

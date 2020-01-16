@@ -9,8 +9,8 @@ public class ComplexModel extends Model {
 
     public final double priority = 0.5;
 
-    public ComplexModel(double startX, double sizeX, double startY, double sizeY, Door door, Camera camera, LightBulb lightBulb, Window window, double price, int imageID, double priority){
-        super(startX, sizeX, startY, sizeY, price, imageID, priority);
+    public ComplexModel(double startX, double sizeX, double startY, double sizeY, Door door, Camera camera, LightBulb lightBulb, Window window, double price, double priority) {
+        super(startX, sizeX, startY, sizeY, price, priority);
         this.door = door;
         this.camera = camera;
         this.lightBulb = lightBulb;

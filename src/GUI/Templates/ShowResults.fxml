@@ -1,31 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.Scene?>
-<?import javafx.stage.Stage?>
-<Stage fx:id="renderedStage" height="421.0" iconified="true" resizable="false" title="RealityForetell" width="600.0"
-       xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
-       fx:controller="GUI.Controllers.Visualization">
+<?import javafx.scene.layout.*?>
+<?import javafx.stage.*?>
+
+<Stage fx:id="renderedStage" height="421.0" iconified="true" resizable="false" title="RealityForetell" width="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controllers.Visualization">
     <scene>
         <Scene fx:id="scene">
-            <AnchorPane prefHeight="421.0" prefWidth="600.0" styleClass="background"
-                        stylesheets="@../Stylesheets/ShowResults.css">
+            <AnchorPane prefHeight="421.0" prefWidth="600.0" styleClass="background" stylesheets="@../Stylesheets/ShowResults.css">
                 <children>
-                    <Button layoutX="440.0" layoutY="336.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="116.0"
-                            text="Zapisz"/>
-                    <Button fx:id="nextImageButton" layoutX="324.0" layoutY="338.0" mnemonicParsing="false"
-                            onAction="#onNextImageButtonClick" prefHeight="48.0" prefWidth="88.0" text="Następny"/>
-                    <Button fx:id="previousImageButton" layoutX="41.0" layoutY="336.0" mnemonicParsing="false"
-                            onAction="#onPreviousImageButton" prefHeight="48.0" prefWidth="88.0" text="Poprzedni"/>
-                    <ProgressBar layoutX="163.0" layoutY="362.0" prefHeight="18.0" prefWidth="130.0" progress="0.0"/>
-                    <Label alignment="CENTER" layoutX="169.0" layoutY="334.0" prefHeight="17.0" prefWidth="118.0"
-                           styleClass="generationNumberPresenter"/>
-                    <Pane layoutX="28.0" layoutY="27.0" prefHeight="283.0" prefWidth="544.0"
-                          styleClass="schemePresenter">
+                    <Button layoutX="440.0" layoutY="336.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="116.0" text="Zapisz" />
+                    <Button fx:id="nextImageButton" layoutX="324.0" layoutY="338.0" mnemonicParsing="false" onAction="#onNextImageButtonClick" prefHeight="48.0" prefWidth="88.0" text="Następny" />
+                    <Button fx:id="previousImageButton" layoutX="41.0" layoutY="336.0" mnemonicParsing="false" onAction="#onPreviousImageButton" prefHeight="48.0" prefWidth="88.0" text="Poprzedni" />
+                    <ProgressBar fx:id="progressBar" layoutX="163.0" layoutY="362.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" />
+                    <Label fx:id="progressLabel" alignment="CENTER" layoutX="169.0" layoutY="334.0" prefHeight="17.0" prefWidth="118.0" styleClass="generationNumberPresenter" />
+                    <Pane layoutX="28.0" layoutY="27.0" prefHeight="283.0" prefWidth="283.0" styleClass="schemePresenterBackground">
                         <children>
-                            <Pane fx:id="schemeView" layoutX="83.0" layoutY="7.0" prefHeight="269.0" prefWidth="379.0"/>
+                            <Pane fx:id="schemeView" layoutX="22.0" layoutY="22.0" prefHeight="240.0" prefWidth="240.0" styleClass="schemeViewPresenter" />
                         </children>
                     </Pane>
                 </children>

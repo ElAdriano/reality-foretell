@@ -3,6 +3,6 @@ package Models;
 public class LightBulb extends Model{
 
     public LightBulb(double x, double y){
-        super(x, 1, y, 1, 10, 2, 0.33);
+        super(x, 1, y, 1, 10, 0.33);
     }
 }

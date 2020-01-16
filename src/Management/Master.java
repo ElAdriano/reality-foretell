@@ -7,8 +7,12 @@ import javafx.stage.Stage;
 
 public class Master extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Stage stage = FXMLLoader.load(getClass().getResource("/GUI/Templates/StartMenu.fxml"));
 
         primaryStage.setScene(stage.getScene());
@@ -18,9 +22,5 @@ public class Master extends Application {
         primaryStage.setHeight(450);
         primaryStage.getIcons().add(new Image("/GUI/Backgrounds/RealityForetellIcon.png"));
         primaryStage.show();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
