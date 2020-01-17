@@ -1,9 +1,7 @@
 package Models;
 
 import Management.Fields;
-import Management.ImageCreator;
 import Management.SchemeGenerator;
-import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -17,7 +15,6 @@ public class PrisonScheme {
     private MonitoringRoom monitoringRoom;
     private SanitaryNook sanitaryNook;
 
-    private Image imageToShow;
     private Fields[][] prisonPlan;
     private int planSquareSize;
 
@@ -44,7 +41,8 @@ public class PrisonScheme {
         for (int w = 0; w < planSquareSize; w++) {
             for (int h = 0; h < planSquareSize; h++) {
                 if (!(w >= (int) SchemeGenerator.conditions.bDimensionOfPrison - (int) SchemeGenerator.conditions.dDimensionOfPrison
-                        && h < (int) SchemeGenerator.conditions.cDimensionOfPrison)) {
+                        && h < (int) SchemeGenerator.conditions.cDimensionOfPrison
+                        || h > (int) SchemeGenerator.conditions.aDimensionOfPrison)) {
                     prisonPlan[w][h] = Fields.CORRIDOR;
                 }
             }
@@ -59,20 +57,8 @@ public class PrisonScheme {
         }
     }
 
-    private void createImageToShow() {
-        imageToShow = ImageCreator.createImage(prisonPlan, planSquareSize, planSquareSize);
-    }
-
     public void arrangePrisonScheme() {
         //TODO initializing PrisonScheme components and whole prison
-    }
-
-    public void updateImage(Image image) {
-        imageToShow = image;
-    }
-
-    public Image getImageToShow() {
-        return imageToShow;
     }
 
     public int getPlanSquareSize() {
@@ -81,6 +67,10 @@ public class PrisonScheme {
 
     public double getRate() {
         return rate;
+    }
+
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 
     public Fields[][] getPrisonPlan() {

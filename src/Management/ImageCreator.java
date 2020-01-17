@@ -7,7 +7,9 @@ import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 
 public class ImageCreator {
-    public static Image createImage(Fields[][] prisonPlan, int width, int height) {
+    public static Image createImage(Fields[][] prisonPlan, int size) {
+        int height = size;
+        int width = size;
         BufferedImage returningImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
         for (int i = 0; i < height; i++) {

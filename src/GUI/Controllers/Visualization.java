@@ -1,22 +1,15 @@
 package GUI.Controllers;
 
-import Management.ImageCreator;
+import Management.ImageHolder;
 import Management.SchemeGenerator;
-import Models.PrisonScheme;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.image.Image;
-import javafx.scene.layout.*;
-
-import java.util.ArrayList;
+import javafx.scene.layout.Pane;
 
 public class Visualization {
-
-    private volatile ArrayList<Image> generatedSchemes;
-    private volatile ArrayList<Background> generatedSchemesBackgroundImages;
 
     @FXML
     private ProgressBar progressBar;
@@ -27,30 +20,22 @@ public class Visualization {
     @FXML
     private Pane schemeView;
 
-    public Visualization() {
-        generatedSchemes = new ArrayList<>();
-        generatedSchemesBackgroundImages = new ArrayList<>();
+    @FXML
+    private Button nextImageButton;
+    @FXML
+    private Button previousImageButton;
 
-        SchemeGenerator generator = new SchemeGenerator();
-        PrisonScheme prisonScheme = new PrisonScheme();
-        Image image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize(), prisonScheme.getPlanSquareSize());
-        addNewGeneratedImage(image);
-        /*addNewGeneratedImage(image);*/
-        //generator.run();
-        //addNewGeneratedImage(generator.getLastGeneratedImage());
+    public Visualization() throws InterruptedException {
+        System.out.println("Visualization");
+        SchemeGenerator schemeGenerator = new SchemeGenerator();
+        schemeGenerator.start();
+        schemeGenerator.join();
     }
 
     public void initialize() {
-        //showSavedConditions();
+        System.out.println("initialize");
         currentSchemeRenderedIndex = 0;
         updateComponents();
-    }
-
-    public void addNewGeneratedImage(Image image) {
-        generatedSchemes.add(image);
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(
-                BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
-        generatedSchemesBackgroundImages.add(new Background(backgroundImage));
     }
 
     private void showSavedConditions() {
@@ -69,12 +54,14 @@ public class Visualization {
 
     @FXML
     public void onNextImageButtonClick(ActionEvent actionEvent) {
+        int amountOfImages = ImageHolder.getGeneratedSchemesAmount();
         currentSchemeRenderedIndex++;
-        if (currentSchemeRenderedIndex + 1 >= generatedSchemesBackgroundImages.size()) {
+        if (currentSchemeRenderedIndex + 1 >= amountOfImages) {
             disableButton(actionEvent);
         }
-        if (currentSchemeRenderedIndex < generatedSchemesBackgroundImages.size()) {
+        if (currentSchemeRenderedIndex < amountOfImages) {
             updateComponents();
+            previousImageButton.setDisable(false);
         }
     }
 
@@ -86,13 +73,20 @@ public class Visualization {
         }
         if (currentSchemeRenderedIndex >= 0) {
             updateComponents();
+            nextImageButton.setDisable(false);
         }
     }
 
     private void updateComponents() {
-        progressBar.setProgress((double)(currentSchemeRenderedIndex + 1) / generatedSchemes.size());
-        progressLabel.setText(String.valueOf((currentSchemeRenderedIndex + 1) / generatedSchemes.size()));
-        schemeView.setBackground(generatedSchemesBackgroundImages.get(currentSchemeRenderedIndex));
+        int amountOfSchemes = ImageHolder.getGeneratedSchemesAmount();
+        if (amountOfSchemes == 0) {
+            return;
+        } else {
+            progressBar.setProgress((double) (currentSchemeRenderedIndex + 1) / amountOfSchemes);
+            progressLabel.setText((currentSchemeRenderedIndex + 1) + " / " + amountOfSchemes);
+
+            schemeView.setBackground(ImageHolder.getBackground(currentSchemeRenderedIndex));
+        }
     }
 
     private void disableButton(ActionEvent actionEvent) {
