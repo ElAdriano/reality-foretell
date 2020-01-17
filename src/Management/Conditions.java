@@ -14,6 +14,9 @@ public class Conditions {
     public double cDimensionOfPrison;
     public double dDimensionOfPrison;
 
+    public int xSizeOfMonitoringRoom;
+    public int ySizeOfMonitoringRoom;
+
     public Conditions() {
         budget = -1;
         amountOfPrisoners = -1;
@@ -27,5 +30,8 @@ public class Conditions {
         bDimensionOfPrison = -1;
         cDimensionOfPrison = -1;
         dDimensionOfPrison = -1;
+
+        xSizeOfMonitoringRoom = 10;
+        ySizeOfMonitoringRoom = 10;
     }
 }

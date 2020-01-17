@@ -1,6 +1,5 @@
 package Management;
 
-import Models.PrisonScheme;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;

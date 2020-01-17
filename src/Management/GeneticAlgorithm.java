@@ -1,7 +1,5 @@
 package Management;
 
-import Models.PrisonScheme;
-
 import java.util.ArrayList;
 
 interface GeneticAlgorithm {

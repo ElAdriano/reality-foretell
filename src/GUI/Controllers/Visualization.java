@@ -2,7 +2,7 @@ package GUI.Controllers;
 
 import Management.ImageCreator;
 import Management.SchemeGenerator;
-import Models.PrisonScheme;
+import Management.PrisonScheme;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
