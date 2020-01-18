@@ -30,6 +30,11 @@ public class PrisonScheme {
     private int y1Coridor;
     private int y2Coridor;
 
+    private int w1;
+    private int w2;
+    private int w3;
+    private int w4;
+
     private int rMonitorRoomPlacement;
     private int extraCorridor;
 
@@ -210,6 +215,7 @@ public class PrisonScheme {
     }
 
     private void addEntranceDoor() {
+
         int a = rand.nextInt(3) +1;
         int dS = SchemeGenerator.conditions.doorSize;
         switch (a) {
@@ -242,53 +248,67 @@ public class PrisonScheme {
     }
 
     private void addWards() {
-            int n;
-            int minSize = SchemeGenerator.conditions.minSizeOfWard;
+
+        int minSize = SchemeGenerator.conditions.minSizeOfWard;
 
         switch (1) {
             case 1:
-                n = rand.nextInt((aWall-y2Coridor) / minSize) + 1;
-                for (int i = 1; i < n; i++) {
+                w1 = rand.nextInt((aWall-y2Coridor) / minSize) + 1;
+                for (int i = 1; i < w1; i++) {
                     for (int w = 1; w < x1Coridor; w++) {
-                        for (int h = 1; h < aWall - y2Coridor; h++) {
-                            if ( h ==  i*(aWall-y2Coridor)/n ) {
+                        for (int h = 0; h < aWall - y2Coridor; h++) {
+                            if ( h ==  i*(aWall-y2Coridor)/w1 ) {
                                 prisonPlan[w][h] = Fields.WALL;
                             }
                         }
                     }
+                }
+                prisonWards.add(new PrisonWard(1,1,1, 1));
+                for (int i = 0; i < w1; i++) {
+                    //prisonWards.add(new PrisonWard(1, x1Coridor-1, (int) (i*(double)(aWall-y2Coridor)/w1)+1, (int)((double)(aWall-y2Coridor-w1+1)/w1)));
+                    //prisonWards.add(new PrisonWard(0,1,0, 1));
                 }
             case 2:
-                n = rand.nextInt((cWall) / minSize) + 1;
-                for (int i = 1; i < n; i++) {
+                w2 = rand.nextInt((cWall) / minSize) + 1;
+                for (int i = 1; i < w2; i++) {
                     for (int w = x2Coridor; w < bWall-dWall; w++) {
-                        for (int h = 1; h < cWall; h++) {
-                            if ( h ==  i*(cWall)/n ) {
+                        for (int h = 0; h < cWall; h++) {
+                            if ( h ==  i*(cWall)/w2 ) {
                                 prisonPlan[w][h] = Fields.WALL;
                             }
                         }
                     }
+                }
+                for (int i = 0; i < w1; i++) {
+                    //prisonWards.add(new PrisonWard(x2Coridor+1, (bWall-dWall-x2Coridor-1), i*(cWall)/w2, (cWall-w2+1)/w2));
                 }
             case 3:
-                n = rand.nextInt((dWall) / minSize) + 1;
-                for (int i = 1; i < n; i++) {
+                w3 = rand.nextInt((dWall) / minSize) + 1;
+                for (int i = 1; i < w3; i++) {
                     for (int w = bWall-dWall; w < bWall; w++) {
                         for (int h = cWall; h < aWall - y2Coridor; h++) {
-                            if ( w ==  bWall - dWall + i*(dWall)/n ) {
+                            if ( w ==  bWall - dWall + i*(dWall)/w3 ) {
                                 prisonPlan[w][h] = Fields.WALL;
                             }
                         }
                     }
                 }
+                for (int i = 0; i < w3; i++) {
+                    //prisonWards.add(new PrisonWard(bWall-dWall+i*dWall/w3+1, (dWall-w3+1)/w3, cWall+1, (aWall-cWall-y2Coridor-1)));
+                }
             case 4:
-                n = rand.nextInt((bWall-x2Coridor) / minSize) + 1;
-                for (int i = 1; i < n; i++) {
+                w4 = rand.nextInt((bWall-x2Coridor) / minSize) + 1;
+                for (int i = 1; i < w4; i++) {
                     for (int w = x2Coridor+1; w < bWall; w++) {
                         for (int h = aWall-y1Coridor; h < aWall; h++) {
-                            if ( w ==  x2Coridor + i*(bWall-x2Coridor)/n ) {
+                            if ( w ==  x2Coridor + i*(bWall-x2Coridor)/w4 ) {
                                 prisonPlan[w][h] = Fields.WALL;
                             }
                         }
                     }
+                }
+                for (int i = 0; i < w1; i++) {
+                    //prisonWards.add(new PrisonWard(x2Coridor+i*(bWall-x2Coridor)/w4+1, (bWall-x2Coridor-w4+1)/w4, i*(aWall-y2Coridor)/w1, (aWall-y2Coridor-w1+1)/w1));
                 }
         }
     }
