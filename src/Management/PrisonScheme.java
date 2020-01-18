@@ -146,6 +146,7 @@ public class PrisonScheme {
                         }
                     }
                 }
+                addExtraCorridor(1);
                 break;
             case 2:
                 for (int w = 1; w < bWall-1; w++) {
@@ -155,6 +156,7 @@ public class PrisonScheme {
                         }
                     }
                 }
+                addExtraCorridor(rand.nextInt(2)+1);
                 break;
             case 3:
                 for (int w = 1; w < bWall-1; w++) {
@@ -164,12 +166,37 @@ public class PrisonScheme {
                         }
                     }
                 }
+                addExtraCorridor(rand.nextInt(2) + 1);
                 break;
             case 4:
                 for (int w = 1; w < bWall-1; w++) {
                     for (int h = 1; h < aWall-1; h++) {
                         if ( w >= x1Coridor && h >= aWall - y1Coridor && w <= x2Coridor) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
+                        }
+                    }
+                }
+                addExtraCorridor(2);
+                break;
+        }
+    }
+
+    private void addExtraCorridor(int a) {
+        switch (a) {
+            case 1:
+                for (int w = 1; w < bWall-1; w++) {
+                    for (int h = 1; h < aWall-1; h++) {
+                        if ( w > x1Coridor && h >= aWall - y1Coridor && w < x2Coridor) {
+                            prisonPlan[w][h] = Fields.CORRIDOR;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                for (int w = 1; w < bWall-1; w++) {
+                    for (int h = 1; h < aWall-1; h++) {
+                        if (  h < aWall - y1Coridor && w <= x1Coridor && h > aWall - y2Coridor ) {
+                            prisonPlan[w][h] = Fields.CORRIDOR;
                         }
                     }
                 }
