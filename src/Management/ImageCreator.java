@@ -33,7 +33,7 @@ public class ImageCreator {
                 returningValue = 16776960;
                 break;
             case MONITORING_ROOM:
-                returningValue = 12632256; // TODO
+                returningValue = 255; // TODO
                 break;
             case PRISON_WARD:
                 returningValue = 12632256; // TODO
@@ -49,6 +49,12 @@ public class ImageCreator {
                 break;
             case CORRIDOR:
                 returningValue = 12632256;
+                break;
+            case WALL:
+                returningValue = 255;
+                break;
+            case EMPTY:
+                returningValue = 0;
                 break;
         }
         return returningValue;

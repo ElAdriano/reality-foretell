@@ -1,8 +1,5 @@
 package Management;
 
-import Management.Fields;
-import Management.ImageCreator;
-import Management.SchemeGenerator;
 import Models.*;
 import javafx.scene.image.Image;
 
@@ -28,6 +25,12 @@ public class PrisonScheme {
     private int cWall;
     private int dWall;
 
+    private int x1Coridor;
+    private int x2Coridor;
+    private int y1Coridor;
+    private int y2Coridor;
+
+    private int rMonitorRoomPlacement;
 
     private Random rand;
 
@@ -57,8 +60,10 @@ public class PrisonScheme {
         //TODO create PrisonScheme instance
 
         addOutsideWalls();
-        addCoridors();
+        addCorridors();
+        addMonitoringRoom();
     }
+
 
     private void fillAsOutsideArea() {
         for (int w = 0; w < planSquareSize; w++) {
@@ -71,7 +76,7 @@ public class PrisonScheme {
     private void fillAsEmpty() {
         for (int w = 0; w < planSquareSize; w++) {
             for (int h = 0; h < planSquareSize; h++) {
-                if (!(w > bWall - dWall && h < cWall)) {
+                if (!(w > bWall - dWall - 1 && h < cWall - 1)) {
                     prisonPlan[w][h] = Fields.EMPTY;
                 }
             }
@@ -81,21 +86,75 @@ public class PrisonScheme {
     private void addOutsideWalls() {
         for (int w = 0; w < bWall; w++) {
             for (int h = 0; h < aWall; h++) {
-                if (h == 0 || w == aWall ||
-                        (w == 0 &&  h <= bWall- dWall) ||
-                        (w <= cWall && h == bWall - dWall) ||
-                        (w == cWall && h >= bWall - dWall) ||
-                        (w >= cWall && h == bWall)) {
+                if (w == 0 || h == aWall-1 ||
+                        (h == 0 &&  w <= bWall- dWall-1) ||
+                        (h <= cWall-1 && w == bWall - dWall - 1) ||
+                        (h == cWall-1 && w >= bWall - dWall - 1) ||
+                        (h >= cWall-1 && w == bWall-1)) {
                     prisonPlan[w][h] = Fields.WALL;
                 }
             }
         }
     }
 
-    private void addCoridors() {
-        int x = rand.nextInt(bWall - dWall - SchemeGenerator.conditions.xSizeOfMonitoringRoom) + SchemeGenerator.conditions.xSizeOfMonitoringRoom;
-        int y = rand.nextInt(aWall - cWall - SchemeGenerator.conditions.ySizeOfMonitoringRoom) + SchemeGenerator.conditions.ySizeOfMonitoringRoom;
+    private void addCorridors() {
+        int xMR = SchemeGenerator.conditions.xMinSizeOfMonitoringRoom;
+        int yMR = SchemeGenerator.conditions.yMinSizeOfMonitoringRoom;
+        x1Coridor = rand.nextInt((bWall - dWall)*2/3-xMR)+xMR;
+        x2Coridor = (bWall-dWall-x1Coridor)/2 + x1Coridor;
+        y1Coridor = rand.nextInt((aWall- cWall)*2/3-yMR)+yMR;
+        y2Coridor = (aWall - cWall - y1Coridor)/2 + y1Coridor;
+        for (int w = 1; w < bWall-1; w++) {
+            for (int h = 1; h < aWall-1; h++) {
+                if ( h == aWall - y1Coridor || w == x1Coridor || h == aWall - y2Coridor || w == x2Coridor) {
+                    prisonPlan[w][h] = Fields.CORRIDOR;
+                }
+            }
+        }
+    }
 
+    private void addMonitoringRoom() {
+
+        rMonitorRoomPlacement = rand.nextInt(4) + 1;
+
+        switch (rMonitorRoomPlacement) {
+            case 1:
+                for (int w = 1; w < bWall-1; w++) {
+                    for (int h = 1; h < aWall-1; h++) {
+                        if (  h < aWall - y1Coridor && w < x1Coridor && h > aWall - y2Coridor ) {
+                            prisonPlan[w][h] = Fields.MONITORING_ROOM;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                for (int w = 1; w < bWall-1; w++) {
+                    for (int h = 1; h < aWall-1; h++) {
+                        if (  h < aWall - y1Coridor && w > x1Coridor && h > aWall - y2Coridor && w < x2Coridor) {
+                            prisonPlan[w][h] = Fields.MONITORING_ROOM;
+                        }
+                    }
+                }
+                break;
+            case 3:
+                for (int w = 1; w < bWall-1; w++) {
+                    for (int h = 1; h < aWall-1; h++) {
+                        if ( w < x1Coridor && h > aWall - y1Coridor ) {
+                            prisonPlan[w][h] = Fields.MONITORING_ROOM;
+                        }
+                    }
+                }
+                break;
+            case 4:
+                for (int w = 1; w < bWall-1; w++) {
+                    for (int h = 1; h < aWall-1; h++) {
+                        if ( w > x1Coridor && h > aWall - y1Coridor && w < x2Coridor) {
+                            prisonPlan[w][h] = Fields.MONITORING_ROOM;
+                        }
+                    }
+                }
+                break;
+        }
     }
 
     private void createImageToShow() {
