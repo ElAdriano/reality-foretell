@@ -16,6 +16,7 @@ public class Conditions {
 
     public int xMinSizeOfMonitoringRoom;
     public int yMinSizeOfMonitoringRoom;
+    public int minSizeOfWard;
 
     public Conditions() {
         budget = -1;
@@ -33,5 +34,6 @@ public class Conditions {
 
         xMinSizeOfMonitoringRoom = 10;
         yMinSizeOfMonitoringRoom = 10;
+        minSizeOfWard = 5;
     }
 }
