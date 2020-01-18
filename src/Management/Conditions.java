@@ -14,6 +14,7 @@ public class Conditions {
     public double cDimensionOfPrison;
     public double dDimensionOfPrison;
 
+    public int doorSize;
     public int xMinSizeOfMonitoringRoom;
     public int yMinSizeOfMonitoringRoom;
     public int minSizeOfWard;
@@ -32,6 +33,7 @@ public class Conditions {
         cDimensionOfPrison = -1;
         dDimensionOfPrison = -1;
 
+        doorSize = 3;
         xMinSizeOfMonitoringRoom = 10;
         yMinSizeOfMonitoringRoom = 10;
         minSizeOfWard = 10;

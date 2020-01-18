@@ -31,7 +31,7 @@ public class PrisonScheme {
     private int y2Coridor;
 
     private int rMonitorRoomPlacement;
-
+    private int extraCorridor;
 
     private Random rand;
 
@@ -64,7 +64,9 @@ public class PrisonScheme {
         addCorridors();
         addInsideWalls();
         addMonitoringRoom();
+        addEntranceDoor();
         addWards();
+        addSanitaryNooks();
     }
 
     private void fillAsOutsideArea() {
@@ -147,7 +149,7 @@ public class PrisonScheme {
                         }
                     }
                 }
-                addExtraCorridor(1);
+                extraCorridor = 1;
                 break;
             case 2:
                 for (int w = 1; w < bWall-1; w++) {
@@ -157,7 +159,7 @@ public class PrisonScheme {
                         }
                     }
                 }
-                addExtraCorridor(rand.nextInt(2)+1);
+                extraCorridor = rand.nextInt(2)+1;
                 break;
             case 3:
                 for (int w = 1; w < bWall-1; w++) {
@@ -167,7 +169,7 @@ public class PrisonScheme {
                         }
                     }
                 }
-                addExtraCorridor(rand.nextInt(2) + 1);
+                extraCorridor = rand.nextInt(2) + 1;
                 break;
             case 4:
                 for (int w = 1; w < bWall-1; w++) {
@@ -177,9 +179,11 @@ public class PrisonScheme {
                         }
                     }
                 }
-                addExtraCorridor(2);
+                extraCorridor = 2;
                 break;
         }
+
+        addExtraCorridor(extraCorridor);
     }
 
     private void addExtraCorridor(int a) {
@@ -200,6 +204,38 @@ public class PrisonScheme {
                             prisonPlan[w][h] = Fields.CORRIDOR;
                         }
                     }
+                }
+                break;
+        }
+    }
+
+    private void addEntranceDoor() {
+        int a = rand.nextInt(3) +1;
+        int dS = SchemeGenerator.conditions.doorSize;
+        switch (a) {
+            case 1:
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[(x2Coridor+x1Coridor-dS)/2+i][0] = Fields.DOOR;
+                }
+                prisonPlan[(x2Coridor+x1Coridor)/2][0] = Fields.DOOR;
+                break;
+            case 2:
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[bWall-1][aWall - (y1Coridor+y2Coridor-dS)/2+i] = Fields.DOOR;
+                }
+                break;
+            case 3:
+                switch (extraCorridor) {
+                    case 2:
+                        for (int i = 0; i < dS; i++) {
+                            prisonPlan[0][aWall - (y1Coridor+y2Coridor-dS)/2+i] = Fields.DOOR;
+                        }
+                        break;
+                    case 1:
+                        for (int i = 0; i < dS; i++) {
+                            prisonPlan[(x2Coridor+x1Coridor-dS)/2+i][bWall] = Fields.DOOR;
+                        }
+                        break;
                 }
                 break;
         }
@@ -255,6 +291,10 @@ public class PrisonScheme {
                     }
                 }
         }
+    }
+
+    private void addSanitaryNooks() {
+
     }
 
     private void createImageToShow() {
