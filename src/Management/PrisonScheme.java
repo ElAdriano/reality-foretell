@@ -32,6 +32,7 @@ public class PrisonScheme {
 
     private int rMonitorRoomPlacement;
 
+
     private Random rand;
 
     private double rate;
@@ -75,8 +76,8 @@ public class PrisonScheme {
     }
 
     private void fillAsEmpty() {
-        for (int w = 0; w < planSquareSize; w++) {
-            for (int h = 0; h < planSquareSize; h++) {
+        for (int w = 0; w < bWall; w++) {
+            for (int h = 0; h < aWall; h++) {
                 if (!(w > bWall - dWall - 1 && h < cWall - 1)) {
                     prisonPlan[w][h] = Fields.EMPTY;
                 }
