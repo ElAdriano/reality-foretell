@@ -61,6 +61,7 @@ public class PrisonScheme {
 
         addOutsideWalls();
         addCorridors();
+        addInsideWalls();
         addMonitoringRoom();
         addWards();
     }
@@ -87,10 +88,10 @@ public class PrisonScheme {
         for (int w = 0; w < bWall; w++) {
             for (int h = 0; h < aWall; h++) {
                 if (w == 0 || h == aWall-1 ||
-                        (h == 0 &&  w <= bWall- dWall-1) ||
-                        (h <= cWall-1 && w == bWall - dWall - 1) ||
-                        (h == cWall-1 && w >= bWall - dWall - 1) ||
-                        (h >= cWall-1 && w == bWall-1)) {
+                        (h == 0 &&  w <= bWall- dWall) ||
+                        (h <= cWall && w == bWall - dWall) ||
+                        (h == cWall-1 && w >= bWall - dWall) ||
+                        (h >= cWall && w == bWall-1)) {
                     prisonPlan[w][h] = Fields.WALL;
                 }
             }
@@ -108,6 +109,25 @@ public class PrisonScheme {
             for (int h = 1; h < aWall-1; h++) {
                 if ( (h < aWall - y1Coridor && w > x1Coridor && h > aWall - y2Coridor) || (w > x1Coridor && w < x2Coridor && h < aWall - y1Coridor)) {
                     prisonPlan[w][h] = Fields.CORRIDOR;
+                }
+            }
+        }
+    }
+
+    private void addInsideWalls() {
+        for (int w = 1; w < bWall-1; w++) {
+            for (int h = 1; h < aWall-1; h++) {
+                if ((w == x1Coridor && h < aWall - y1Coridor) ||
+                        (w == x2Coridor && h <= aWall - y2Coridor) ||
+                        (w >= x2Coridor && h == aWall - y2Coridor) ||
+                        (w >= x1Coridor && h == aWall - y1Coridor) ||
+                        (w <= x1Coridor && h == aWall - y1Coridor) ||
+                        (w <= x1Coridor && h == aWall - y2Coridor) ||
+                        (w == x1Coridor && h >= aWall - y1Coridor) ||
+                        (w == x2Coridor && h >= aWall - y1Coridor) ||
+                        (w >= x2Coridor && h == cWall-1) ||
+                        (w == bWall - dWall && h <= aWall - y2Coridor) ){
+                    prisonPlan[w][h] = Fields.WALL;
                 }
             }
         }
@@ -189,7 +209,7 @@ public class PrisonScheme {
                 for (int i = 1; i < n; i++) {
                     for (int w = bWall-dWall; w < bWall; w++) {
                         for (int h = cWall; h < aWall - y2Coridor; h++) {
-                            if ( w ==  i*(dWall)/n ) {
+                            if ( w ==  bWall - dWall + i*(dWall)/n ) {
                                 prisonPlan[w][h] = Fields.WALL;
                             }
                         }
@@ -200,7 +220,7 @@ public class PrisonScheme {
                 for (int i = 1; i < n; i++) {
                     for (int w = x2Coridor+1; w < bWall; w++) {
                         for (int h = aWall-y1Coridor; h < aWall; h++) {
-                            if ( h ==  i*(bWall-x2Coridor)/n ) {
+                            if ( w ==  x2Coridor + i*(bWall-x2Coridor)/n ) {
                                 prisonPlan[w][h] = Fields.WALL;
                             }
                         }

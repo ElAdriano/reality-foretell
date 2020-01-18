@@ -34,6 +34,6 @@ public class Conditions {
 
         xMinSizeOfMonitoringRoom = 10;
         yMinSizeOfMonitoringRoom = 10;
-        minSizeOfWard = 5;
+        minSizeOfWard = 10;
     }
 }
