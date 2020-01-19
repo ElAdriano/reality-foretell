@@ -19,6 +19,7 @@ public class PrisonScheme {
     private int planSquareSize;
 
     private double rate;
+    private double price;
 
     public PrisonScheme() {
         this.camerasInScheme = new ArrayList<>();
@@ -75,5 +76,9 @@ public class PrisonScheme {
 
     public Fields[][] getPrisonPlan() {
         return prisonPlan;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }

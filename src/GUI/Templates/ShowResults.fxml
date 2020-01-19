@@ -10,16 +10,17 @@
         <Scene fx:id="scene">
             <AnchorPane prefHeight="421.0" prefWidth="600.0" styleClass="background" stylesheets="@../Stylesheets/ShowResults.css">
                 <children>
-                    <Button layoutX="440.0" layoutY="336.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="116.0" text="Zapisz" />
+                    <Button fx:id="saveButton" layoutX="440.0" layoutY="336.0" mnemonicParsing="false" onAction="#saveCurrentlyShowedImage" prefHeight="48.0" prefWidth="116.0" text="Zapisz" />
                     <Button fx:id="nextImageButton" layoutX="324.0" layoutY="338.0" mnemonicParsing="false" onAction="#onNextImageButtonClick" prefHeight="48.0" prefWidth="88.0" text="Następny" />
                     <Button fx:id="previousImageButton" layoutX="41.0" layoutY="336.0" mnemonicParsing="false" onAction="#onPreviousImageButton" prefHeight="48.0" prefWidth="88.0" text="Poprzedni" />
                     <ProgressBar fx:id="progressBar" layoutX="163.0" layoutY="362.0" prefHeight="18.0" prefWidth="130.0" progress="0.0" />
                     <Label fx:id="progressLabel" alignment="CENTER" layoutX="169.0" layoutY="334.0" prefHeight="17.0" prefWidth="118.0" styleClass="generationNumberPresenter" />
-                    <Pane layoutX="28.0" layoutY="27.0" prefHeight="283.0" prefWidth="283.0" styleClass="schemePresenterBackground">
+                    <Pane layoutX="41.0" layoutY="27.0" prefHeight="283.0" prefWidth="283.0" styleClass="schemePresenterBackground">
                         <children>
                             <Pane fx:id="schemeView" layoutX="22.0" layoutY="22.0" prefHeight="240.0" prefWidth="240.0" styleClass="schemeViewPresenter" />
                         </children>
                     </Pane>
+                      <Label fx:id="parameterInfoLabel" layoutX="368.0" layoutY="101.0" prefHeight="135.0" prefWidth="184.0" styleClass="parameterPresenterField" textAlignment="JUSTIFY" />
                 </children>
             </AnchorPane>
         </Scene>

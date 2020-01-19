@@ -19,7 +19,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         for (int i = 0; i < 5; i++) {
             PrisonScheme prisonScheme = new PrisonScheme();
             Image image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize());
-            ImageHolder.addImage(image);
+            ImageHolder.addImage(image, prisonScheme.getPrice());
         }
 
         /*
@@ -42,7 +42,8 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
 
             PrisonScheme bestIndividual = getBestIndividualInPopulation(nextGeneration);
             ImageHolder.addImage(
-                    ImageCreator.createImage(bestIndividual.getPrisonPlan(), bestIndividual.getPlanSquareSize())
+                    ImageCreator.createImage(bestIndividual.getPrisonPlan(), bestIndividual.getPlanSquareSize()),
+                    bestIndividual.getPrice()
             );
         }
     }
