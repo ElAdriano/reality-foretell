@@ -3,9 +3,11 @@ package Management;
 import javafx.scene.image.Image;
 import Models.PrisonScheme;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SchemeGenerator extends Thread implements GeneticAlgorithm {
     public static Conditions conditions = null;
+    public Random rand;
 
     public static void initStaticConditions() {
         if (conditions == null) {
@@ -15,11 +17,19 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
 
     @Override
     public void run() {
-        for (int i = 0; i < 5; i++) {
+        ArrayList<PrisonScheme> generation = new ArrayList<>();
+        this.rand = new Random();
+        for (int i = 0; i < 2; i++) {
             PrisonScheme prisonScheme = new PrisonScheme();
+            prisonScheme.arrangePrisonScheme();
+            generation.add(prisonScheme);
             Image image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize());
             ImageHolder.addImage(image, prisonScheme.getPrice());
         }
+        PrisonScheme prisonScheme = makeCrossingOver(generation.get(0), generation.get(1));
+        Image image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize());
+        ImageHolder.addImage(image, prisonScheme.getPrice());
+
 
         /*
         FINAL VERSION
@@ -59,10 +69,82 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         return 0;
     }
 
-    // TODO
     @Override
     public PrisonScheme makeCrossingOver(PrisonScheme individual1, PrisonScheme individual2) {
-        return null;
+        PrisonScheme babyPrison = new PrisonScheme();
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setX1Corridor(individual1.getX1Corridor());
+                babyPrison.setX2Corridor(individual1.getX2Corridor());
+                break;
+            case 2:
+                babyPrison.setX1Corridor(individual2.getX1Corridor());
+                babyPrison.setX2Corridor(individual2.getX2Corridor());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setY1Corridor(individual1.getY1Corridor());
+                babyPrison.setY2Corridor(individual1.getY2Corridor());
+                break;
+            case 2:
+                babyPrison.setY1Corridor(individual2.getY1Corridor());
+                babyPrison.setY2Corridor(individual2.getY2Corridor());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setrMonitorRoomPlacement(individual1.getrMonitorRoomPlacement());
+                babyPrison.setExtraCorridor(individual1.getExtraCorridor());
+                babyPrison.setEntranceDoorPosition(individual1.getEntranceDoorPosition());
+                break;
+            case 2:
+                babyPrison.setrMonitorRoomPlacement(individual2.getrMonitorRoomPlacement());
+                babyPrison.setExtraCorridor(individual2.getExtraCorridor());
+                babyPrison.setEntranceDoorPosition(individual2.getEntranceDoorPosition());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setW1(individual1.getW1());
+                break;
+            case 2:
+                babyPrison.setW1(individual2.getW1());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setW2(individual1.getW2());
+                break;
+            case 2:
+                babyPrison.setW2(individual2.getW2());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setW3(individual1.getW3());
+                break;
+            case 2:
+                babyPrison.setW3(individual2.getW3());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setW4(individual1.getW4());
+                break;
+            case 2:
+                babyPrison.setW4(individual2.getW4());
+                break;
+
+        }
+        babyPrison.arrangePrisonScheme();
+        return babyPrison;
     }
 
     // -------------------------------------------------------------------------
