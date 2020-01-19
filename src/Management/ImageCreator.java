@@ -46,7 +46,7 @@ public class ImageCreator {
                 returningValue = 65280;
                 break;
             case WINDOW:
-                returningValue = 255;
+                returningValue = 16711680;
                 break;
             case OUTSIDE_FIELD:
                 returningValue = 8421504;

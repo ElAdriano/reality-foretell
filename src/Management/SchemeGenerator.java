@@ -29,7 +29,13 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         PrisonScheme prisonScheme = makeCrossingOver(generation.get(0), generation.get(1));
         Image image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize());
         ImageHolder.addImage(image, prisonScheme.getPrice());
-
+        for (int i = 0; i < 97; i++) {
+            prisonScheme = new PrisonScheme();
+            prisonScheme.arrangePrisonScheme();
+            generation.add(prisonScheme);
+            image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize());
+            ImageHolder.addImage(image, prisonScheme.getPrice());
+        }
 
         /*
         FINAL VERSION

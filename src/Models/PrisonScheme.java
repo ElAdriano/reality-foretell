@@ -25,118 +25,6 @@ public class PrisonScheme {
     private int cWall;
     private int dWall;
 
-    public int getX1Corridor() {
-        return x1Corridor;
-    }
-
-    public void setX1Corridor(int x1Corridor) {
-        this.x1Corridor = x1Corridor;
-    }
-
-    public int getX2Corridor() {
-        return x2Corridor;
-    }
-
-    public void setX2Corridor(int x2Corridor) {
-        this.x2Corridor = x2Corridor;
-    }
-
-    public int getY1Corridor() {
-        return y1Corridor;
-    }
-
-    public void setY1Corridor(int y1Corridor) {
-        this.y1Corridor = y1Corridor;
-    }
-
-    public int getY2Corridor() {
-        return y2Corridor;
-    }
-
-    public void setY2Corridor(int y2Corridor) {
-        this.y2Corridor = y2Corridor;
-    }
-
-    public int getW1() {
-        return w1;
-    }
-
-    public void setW1(int w1) {
-        this.w1 = w1;
-    }
-
-    public int getW2() {
-        return w2;
-    }
-
-    public void setW2(int w2) {
-        this.w2 = w2;
-    }
-
-    public int getW3() {
-        return w3;
-    }
-
-    public void setW3(int w3) {
-        this.w3 = w3;
-    }
-
-    public int getW4() {
-        return w4;
-    }
-
-    public void setW4(int w4) {
-        this.w4 = w4;
-    }
-
-    public int getW1Size() {
-        return w1Size;
-    }
-
-    public void setW1Size(int w1Size) {
-        this.w1Size = w1Size;
-    }
-
-    public int getW2Size() {
-        return w2Size;
-    }
-
-    public void setW2Size(int w2Size) {
-        this.w2Size = w2Size;
-    }
-
-    public int getW3Size() {
-        return w3Size;
-    }
-
-    public void setW3Size(int w3Size) {
-        this.w3Size = w3Size;
-    }
-
-    public int getW4Size() {
-        return w4Size;
-    }
-
-    public void setW4Size(int w4Size) {
-        this.w4Size = w4Size;
-    }
-
-    public int getrMonitorRoomPlacement() {
-        return rMonitorRoomPlacement;
-    }
-
-    public void setrMonitorRoomPlacement(int rMonitorRoomPlacement) {
-        this.rMonitorRoomPlacement = rMonitorRoomPlacement;
-    }
-
-    public int getExtraCorridor() {
-        return extraCorridor;
-    }
-
-    public void setExtraCorridor(int extraCorridor) {
-        this.extraCorridor = extraCorridor;
-    }
-
     private int x1Corridor;
     private int x2Corridor;
     private int y1Corridor;
@@ -154,14 +42,6 @@ public class PrisonScheme {
 
     private int rMonitorRoomPlacement;
     private int extraCorridor;
-
-    public int getEntranceDoorPosition() {
-        return entranceDoorPosition;
-    }
-
-    public void setEntranceDoorPosition(int entranceDoorPosition) {
-        this.entranceDoorPosition = entranceDoorPosition;
-    }
 
     private int entranceDoorPosition;
 
@@ -198,6 +78,8 @@ public class PrisonScheme {
         x2Corridor = (bWall-dWall- x1Corridor)/2 + x1Corridor;
         y1Corridor = rand.nextInt((aWall- cWall)*2/3-yMR)+yMR;
         y2Corridor = (aWall - cWall - y1Corridor)/2 + y1Corridor;
+
+        rMonitorRoomPlacement = rand.nextInt(4)+1;
 
         switch (rMonitorRoomPlacement) {
             case 1:
@@ -281,6 +163,7 @@ public class PrisonScheme {
     }
 
     private void addMonitoringRoom() {
+        int dS = SchemeGenerator.conditions.doorSize;
         switch (rMonitorRoomPlacement) {
             case 1:
                 for (int w = 1; w < bWall-1; w++) {
@@ -292,6 +175,12 @@ public class PrisonScheme {
                     }
                 }
                 monitoringRoom = new MonitoringRoom(1, x1Corridor -2,aWall- y2Corridor +1, y2Corridor - y1Corridor -2);
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[x1Corridor][aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2+i] = Fields.DOOR;
+                    prisonPlan[0][aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2+i] = Fields.WINDOW;
+                }
+                doorsOnScheme.add(new Door(x1Corridor, 1, aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2, dS));
+                windowsOnScheme.add(new Window(0,1, aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2, dS));
                 extraCorridor = 1;
                 addExtraWards(2);
                 addExtraWards(3);
@@ -305,6 +194,12 @@ public class PrisonScheme {
                     }
                 }
                 monitoringRoom = new MonitoringRoom(x2Corridor +1,bWall-dWall- x2Corridor -2,cWall+1,aWall-cWall- y2Corridor -2);
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[x2Corridor][cWall+(aWall-cWall-y2Corridor-dS)/2+i] = Fields.DOOR;
+                    prisonPlan[x2Corridor+(bWall-dWall-x2Corridor-dS)/2+i][aWall-y2Corridor] = Fields.DOOR;
+                }
+                doorsOnScheme.add(new Door(x2Corridor, 1, cWall+(aWall-cWall-y2Corridor-dS)/2, dS));
+                doorsOnScheme.add(new Door(x2Corridor+(bWall-dWall-x2Corridor-dS)/2, dS, aWall-y2Corridor, 1));
                 extraCorridor = rand.nextInt(2)*3+1;
                 addExtraWards(3);
                 addExtraWards(extraCorridor);
@@ -319,6 +214,21 @@ public class PrisonScheme {
                 }
                 monitoringRoom = new MonitoringRoom(1, x1Corridor -2,aWall- y1Corridor +1, y1Corridor -2);
                 extraCorridor = rand.nextInt(2)*3 + 1;
+                if (extraCorridor == 1) {
+                    for (int i = 0; i < dS; i++) {
+                        prisonPlan[0][aWall - y1Corridor + (y1Corridor - dS) / 2 + i] = Fields.WINDOW;
+                        prisonPlan[x1Corridor][aWall - y1Corridor + (y1Corridor - dS) / 2 + i] = Fields.DOOR;
+                    }
+                    doorsOnScheme.add(new Door(x1Corridor, 1, aWall - y1Corridor + (y1Corridor - dS) / 2, dS));
+                    windowsOnScheme.add(new Window(0,1, aWall - y1Corridor + (y1Corridor - dS) / 2, dS));
+                } else {
+                    for (int i = 0; i < dS; i++) {
+                        prisonPlan[(x1Corridor - dS) / 2 + i][aWall - y1Corridor] = Fields.DOOR;
+                        prisonPlan[(x1Corridor - dS) / 2 + i][aWall - 1] = Fields.WINDOW;
+                    }
+                    doorsOnScheme.add(new Door((x1Corridor - dS) / 2, dS, aWall - y1Corridor, 1));
+                    windowsOnScheme.add(new Window((x1Corridor - dS) / 2,dS, aWall - 1, 1));
+                }
                 addExtraWards(2);
                 addExtraWards(extraCorridor);
                 break;
@@ -332,6 +242,12 @@ public class PrisonScheme {
                 }
                 monitoringRoom = new MonitoringRoom(x1Corridor +1, x2Corridor - x1Corridor -2,aWall- y1Corridor +1, y1Corridor -2);
                 extraCorridor = 4;
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[x1Corridor+(x2Corridor-x1Corridor-dS)/2+i][aWall-y1Corridor] = Fields.DOOR;
+                    prisonPlan[x1Corridor+(x2Corridor-x1Corridor-dS)/2+i][aWall-1] = Fields.WINDOW;
+                }
+                doorsOnScheme.add(new Door(x1Corridor+(x2Corridor-x1Corridor-dS)/2, dS, aWall - y1Corridor, 1));
+                windowsOnScheme.add(new Window(x1Corridor+(x2Corridor-x1Corridor-dS)/2,dS, aWall-1, 1));
                 addExtraWards(2);
                 addExtraWards(3);
                 break;
@@ -364,9 +280,16 @@ public class PrisonScheme {
     }
 
     private void addExtraWards(int a) {
+        int dS = SchemeGenerator.conditions.doorSize;
         switch (a) {
             case 1:
                 prisonWardsOnScheme.add(new PrisonWard(1, x1Corridor -2,aWall- y2Corridor +1, y2Corridor - y1Corridor -2));
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[x1Corridor][aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2+i] = Fields.DOOR;
+                    prisonPlan[0][aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2+i] = Fields.WINDOW;
+                }
+                doorsOnScheme.add(new Door(x1Corridor, 1, aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2, dS));
+                windowsOnScheme.add(new Window(0,1, aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2, dS));
                 break;
             case 2:
                 for (int w = 1; w < bWall-1; w++) {
@@ -376,12 +299,39 @@ public class PrisonScheme {
                         }
                     }
                 }
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[x2Corridor][cWall+(aWall-cWall-y2Corridor-dS)/2+1] = Fields.DOOR;
+                    prisonPlan[x2Corridor+(bWall-dWall-x2Corridor-dS)/2+i][aWall-y2Corridor] = Fields.DOOR;
+                }
+                doorsOnScheme.add(new Door(x2Corridor, 1, cWall+(aWall-cWall-y2Corridor-dS)/2, dS));
+                doorsOnScheme.add(new Door(x2Corridor+(bWall-dWall-x2Corridor-dS)/2, dS, aWall-y2Corridor, 1));
                 break;
             case 3:
                 prisonWardsOnScheme.add(new PrisonWard(1, x1Corridor -2,aWall- y1Corridor +1, y1Corridor -3));
+                if (extraCorridor == 1) {
+                    for (int i = 0; i < dS; i++) {
+                        prisonPlan[x1Corridor][aWall - y1Corridor + (y1Corridor - dS) / 2 + i] = Fields.DOOR;
+                        prisonPlan[0][aWall - y1Corridor + (y1Corridor - dS) / 2 + i] = Fields.WINDOW;
+                    }
+                    doorsOnScheme.add(new Door(x1Corridor, 1, aWall - y1Corridor + (y1Corridor - dS) / 2, dS));
+                    windowsOnScheme.add(new Window(0,1, aWall - y1Corridor + (y1Corridor - dS) / 2, dS));
+                } else {
+                    for (int i = 0; i < dS; i++) {
+                        prisonPlan[(x1Corridor - dS) / 2 + i][aWall - y1Corridor] = Fields.DOOR;
+                        prisonPlan[(x1Corridor - dS) / 2 + i][aWall - 1] = Fields.WINDOW;
+                    }
+                    doorsOnScheme.add(new Door((x1Corridor - dS) / 2, dS, aWall - y1Corridor, 1));
+                    windowsOnScheme.add(new Window((x1Corridor - dS) / 2,dS, aWall - 1, 1));
+                }
                 break;
             case 4:
                 prisonWardsOnScheme.add(new PrisonWard(x1Corridor +1, x2Corridor - x1Corridor -2,aWall- y1Corridor +1, y1Corridor -3));
+                for (int i = 0; i < dS; i++) {
+                    prisonPlan[x1Corridor+(x2Corridor-x1Corridor-dS)/2+i][aWall-y1Corridor] = Fields.DOOR;
+                    prisonPlan[x1Corridor+(x2Corridor-x1Corridor-dS)/2+i][aWall-1] = Fields.WINDOW;
+                }
+                doorsOnScheme.add(new Door(x1Corridor+(x2Corridor-x1Corridor-dS)/2, dS, aWall - y1Corridor, 1));
+                windowsOnScheme.add(new Window(x1Corridor+(x2Corridor-x1Corridor-dS)/2,dS, aWall-1, 1));
                 break;
         }
     }
@@ -418,11 +368,18 @@ public class PrisonScheme {
     }
 
     private void addWards() {
+        int dS = SchemeGenerator.conditions.doorSize;
         int z;
 
         w1Size = (aWall- y2Corridor -1)/w1;
         z = 1;
         prisonWardsOnScheme.add(new PrisonWard(1, x1Corridor -2, 1, w1Size-2));
+        for (int i = 0; i < dS; i++) {
+            prisonPlan[x1Corridor][(w1Size-dS)/2+i] = Fields.DOOR;
+            prisonPlan[0][i+(w1Size-dS)/2] = Fields.WINDOW;
+        }
+        doorsOnScheme.add(new Door(x1Corridor, 1, (w1Size-dS)/2, dS));
+        windowsOnScheme.add(new Window(0,1, (w1Size-dS)/2, dS));
         while (z<w1) {
             for (int w = 1; w < x1Corridor; w++) {
                 for (int h = 1; h < aWall - y2Corridor; h++) {
@@ -432,12 +389,24 @@ public class PrisonScheme {
                 }
             }
             prisonWardsOnScheme.add(new PrisonWard(1, x1Corridor -2, 1+z*(w1Size), w1Size-2));
+            for (int i = 0; i < dS; i++) {
+                prisonPlan[x1Corridor][w1Size*z+i+(w1Size-dS)/2] = Fields.DOOR;
+                prisonPlan[0][w1Size*z+i+(w1Size-dS)/2] = Fields.WINDOW;
+            }
+            doorsOnScheme.add(new Door(x1Corridor, 1, w1Size*z+(w1Size-dS)/2, dS));
+            windowsOnScheme.add(new Window(0,1, w1Size*z+(w1Size-dS)/2, dS));
             z++;
         }
 
         w2Size = (cWall-1)/w2;
         z = 1;
         prisonWardsOnScheme.add(new PrisonWard(x2Corridor +1, bWall-dWall- x2Corridor -2, 1, w2Size-2));
+        for (int i = 0; i < dS; i++) {
+            prisonPlan[x2Corridor][(w2Size-dS)/2+i] = Fields.DOOR;
+            prisonPlan[bWall-dWall][i+(w2Size-dS)/2] = Fields.WINDOW;
+        }
+        doorsOnScheme.add(new Door(x2Corridor, 1, (w2Size-dS)/2, dS));
+        windowsOnScheme.add(new Window(bWall-dWall,1, (w2Size-dS)/2, dS));
         while (z<w2) {
             for (int w = x2Corridor +1; w < bWall-dWall; w++) {
                 for (int h = 1; h < cWall; h++) {
@@ -447,12 +416,24 @@ public class PrisonScheme {
                 }
             }
             prisonWardsOnScheme.add(new PrisonWard(x2Corridor +1, bWall-dWall- x2Corridor -2, 1+z*(w2Size), w2Size-2));
+            for (int i = 0; i < dS; i++) {
+                prisonPlan[x2Corridor][w2Size*z+i+(w2Size-dS)/2] = Fields.DOOR;
+                prisonPlan[bWall-dWall][w2Size*z+i+(w2Size-dS)/2] = Fields.WINDOW;
+            }
+            doorsOnScheme.add(new Door(x2Corridor, 1, w2Size*z+(w2Size-dS)/2, dS));
+            windowsOnScheme.add(new Window(bWall-dWall,1, aWall-y2Corridor+(y2Corridor-y1Corridor-dS)/2, dS));
             z++;
         }
 
         w3Size = (dWall-1)/w3;
         z =1;
         prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+1, w3Size-2, cWall, aWall-cWall- y2Corridor -1));
+        for (int i = 0; i < dS; i++) {
+            prisonPlan[bWall-dWall+(w3Size-dS)/2+i][aWall-y2Corridor] = Fields.DOOR;
+            prisonPlan[bWall-dWall+(w3Size-dS)/2+i][cWall-1] = Fields.WINDOW;
+        }
+        doorsOnScheme.add(new Door(bWall-dWall+(w3Size-dS)/2, dS, aWall-y2Corridor, 1));
+        windowsOnScheme.add(new Window(bWall-dWall+(w3Size-dS)/2,dS, cWall-1, 1));
         while (z<w3) {
             for (int w = bWall-dWall; w < bWall; w++) {
                 for (int h = cWall + 1; h < aWall - y2Corridor; h++) {
@@ -462,12 +443,24 @@ public class PrisonScheme {
                 }
             }
             prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+1+z*w3Size, w3Size-2, cWall, aWall-cWall- y2Corridor -1));
+            for (int i = 0; i < dS; i++) {
+                prisonPlan[w3Size*z+bWall-dWall+(w3Size-dS)/2+i][aWall-y2Corridor] = Fields.DOOR;
+                prisonPlan[w3Size*z+bWall-dWall+(w3Size-dS)/2+i][cWall-1] = Fields.WINDOW;
+            }
+            doorsOnScheme.add(new Door(w3Size*z+bWall-dWall+(w3Size-dS)/2, dS, aWall-y2Corridor, 1));
+            windowsOnScheme.add(new Window(w3Size*z+bWall-dWall+(w3Size-dS)/2,dS, cWall-1, 1));
             z++;
         }
 
         w4Size = (bWall- x2Corridor -1)/w4;
         z = 1;
         prisonWardsOnScheme.add(new PrisonWard(x2Corridor +1, w4Size-2, aWall- y1Corridor +1, y1Corridor -3));
+        for (int i = 0; i < dS; i++) {
+            prisonPlan[x2Corridor+(w4Size-dS)/2+i][aWall-y1Corridor] = Fields.DOOR;
+            prisonPlan[x2Corridor+(w4Size-dS)/2+i][aWall-1] = Fields.WINDOW;
+        }
+        doorsOnScheme.add(new Door(x2Corridor+(w4Size-dS)/2, dS, aWall-y1Corridor, 1));
+        windowsOnScheme.add(new Window(x2Corridor+(w4Size-dS)/2,dS, aWall-1, 1));
         while (z < w4) {
             for (int w = x2Corridor +1; w < bWall; w++) {
                 for (int h = aWall- y1Corridor +1; h < aWall; h++) {
@@ -477,6 +470,12 @@ public class PrisonScheme {
                 }
             }
             prisonWardsOnScheme.add(new PrisonWard(x2Corridor +1+z*w4Size, w4Size-2, aWall- y1Corridor +1, y1Corridor -3));
+            for (int i = 0; i < dS; i++) {
+                prisonPlan[w4Size*z+x2Corridor+(w4Size-dS)/2+i][aWall-y1Corridor] = Fields.DOOR;
+                prisonPlan[w4Size*z+x2Corridor+(w4Size-dS)/2+i][aWall-1] = Fields.WINDOW;
+            }
+            doorsOnScheme.add(new Door(w4Size*z+x2Corridor+(w4Size-dS)/2, dS, aWall-y1Corridor, 1));
+            windowsOnScheme.add(new Window(w4Size*z+x2Corridor+(w4Size-dS)/2,dS, aWall-1, 1));
             z++;
         }
     }
@@ -484,8 +483,8 @@ public class PrisonScheme {
     private void fillWards() {
         int sanitaryNook;
         for (PrisonWard ward: prisonWardsOnScheme){
-             sanitaryNook = rand.nextInt(4)+1;
-             switch (sanitaryNook) {
+             ward.setSanitaryNookPosition(rand.nextInt(4)+1);
+             switch (ward.getSanitaryNookPosition()) {
                  case 1:
                      sanitaryNooksOnScheme.add(new SanitaryNook(ward.getStartX(), ward.getStartY()));
                      break;
@@ -499,6 +498,7 @@ public class PrisonScheme {
                      sanitaryNooksOnScheme.add(new SanitaryNook(ward.getEndX()-SchemeGenerator.conditions.sizeOfSanitaryNook, ward.getEndY()-SchemeGenerator.conditions.sizeOfSanitaryNook));
                      break;
              }
+
         }
         for (SanitaryNook nook: sanitaryNooksOnScheme) {
             for (int w = (int)nook.getStartX(); w <= (int)nook.getEndX(); w++) {
@@ -537,5 +537,93 @@ public class PrisonScheme {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getX1Corridor() {
+        return x1Corridor;
+    }
+
+    public void setX1Corridor(int x1Corridor) {
+        this.x1Corridor = x1Corridor;
+    }
+
+    public int getX2Corridor() {
+        return x2Corridor;
+    }
+
+    public void setX2Corridor(int x2Corridor) {
+        this.x2Corridor = x2Corridor;
+    }
+
+    public int getY1Corridor() {
+        return y1Corridor;
+    }
+
+    public void setY1Corridor(int y1Corridor) {
+        this.y1Corridor = y1Corridor;
+    }
+
+    public int getY2Corridor() {
+        return y2Corridor;
+    }
+
+    public void setY2Corridor(int y2Corridor) {
+        this.y2Corridor = y2Corridor;
+    }
+
+    public int getW1() {
+        return w1;
+    }
+
+    public void setW1(int w1) {
+        this.w1 = w1;
+    }
+
+    public int getW2() {
+        return w2;
+    }
+
+    public void setW2(int w2) {
+        this.w2 = w2;
+    }
+
+    public int getW3() {
+        return w3;
+    }
+
+    public void setW3(int w3) {
+        this.w3 = w3;
+    }
+
+    public int getW4() {
+        return w4;
+    }
+
+    public void setW4(int w4) {
+        this.w4 = w4;
+    }
+
+    public int getrMonitorRoomPlacement() {
+        return rMonitorRoomPlacement;
+    }
+
+    public void setrMonitorRoomPlacement(int rMonitorRoomPlacement) {
+        this.rMonitorRoomPlacement = rMonitorRoomPlacement;
+    }
+
+    public int getExtraCorridor() {
+        return extraCorridor;
+    }
+
+    public void setExtraCorridor(int extraCorridor) {
+        this.extraCorridor = extraCorridor;
+    }
+
+    public int getEntranceDoorPosition() {
+        return entranceDoorPosition;
+    }
+
+    public void setEntranceDoorPosition(int entranceDoorPosition) {
+        this.entranceDoorPosition = entranceDoorPosition;
     }
 }
