@@ -4,7 +4,7 @@ import Management.SchemeGenerator;
 
 public class MonitoringRoom extends ComplexModel{
 
-    public MonitoringRoom(double startH, double startW ){
-        super(startH, SchemeGenerator.conditions.xMinSizeOfMonitoringRoom, startW, SchemeGenerator.conditions.yMinSizeOfMonitoringRoom, 10000, 0.5);
+    public MonitoringRoom(double startX, double sizeX, double startY, double sizeY ){
+        super(startX, sizeX, startY, sizeY, 10000, 0.5);
     }
 }

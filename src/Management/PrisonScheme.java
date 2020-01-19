@@ -158,10 +158,14 @@ public class PrisonScheme {
                     for (int h = 1; h < aWall-1; h++) {
                         if (  h < aWall - y1Coridor && w < x1Coridor && h > aWall - y2Coridor ) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
+
                         }
                     }
                 }
+                monitoringRoom = new MonitoringRoom(1,x1Coridor-2,aWall-y2Coridor+1,y2Coridor-y1Coridor-2);
                 extraCorridor = 1;
+                addExtraWards(2);
+                addExtraWards(3);
                 break;
             case 2:
                 for (int w = 1; w < bWall-1; w++) {
@@ -171,7 +175,10 @@ public class PrisonScheme {
                         }
                     }
                 }
-                extraCorridor = rand.nextInt(2)+1;
+                monitoringRoom = new MonitoringRoom(x2Coridor+1,bWall-dWall-x2Coridor-2,cWall+1,aWall-cWall-y2Coridor-2);
+                extraCorridor = rand.nextInt(2)*3+1;
+                addExtraWards(3);
+                addExtraWards(extraCorridor);
                 break;
             case 3:
                 for (int w = 1; w < bWall-1; w++) {
@@ -181,7 +188,10 @@ public class PrisonScheme {
                         }
                     }
                 }
-                extraCorridor = rand.nextInt(2) + 1;
+                monitoringRoom = new MonitoringRoom(1,x1Coridor-2,aWall-y1Coridor+1,y1Coridor-2);
+                extraCorridor = rand.nextInt(2)*3 + 1;
+                addExtraWards(2);
+                addExtraWards(extraCorridor);
                 break;
             case 4:
                 for (int w = 1; w < bWall-1; w++) {
@@ -191,7 +201,10 @@ public class PrisonScheme {
                         }
                     }
                 }
-                extraCorridor = 2;
+                monitoringRoom = new MonitoringRoom(x1Coridor+1,x2Coridor-x1Coridor-2,aWall-y1Coridor+1,y1Coridor-2);
+                extraCorridor = 4;
+                addExtraWards(2);
+                addExtraWards(3);
                 break;
         }
 
@@ -209,7 +222,7 @@ public class PrisonScheme {
                     }
                 }
                 break;
-            case 2:
+            case 4:
                 for (int w = 1; w < bWall-1; w++) {
                     for (int h = 1; h < aWall-1; h++) {
                         if (  h < aWall - y1Coridor && w <= x1Coridor && h > aWall - y2Coridor ) {
@@ -217,6 +230,23 @@ public class PrisonScheme {
                         }
                     }
                 }
+                break;
+        }
+    }
+
+    private void addExtraWards(int a) {
+        switch (a) {
+            case 1:
+                prisonWardsOnScheme.add(new PrisonWard(1,x1Coridor-2,aWall-y2Coridor+1,y2Coridor-y1Coridor-2));
+                break;
+            case 2:
+                prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1,bWall-dWall-x2Coridor-2,cWall,aWall-cWall-y2Coridor-1));
+                break;
+            case 3:
+                prisonWardsOnScheme.add(new PrisonWard(1,x1Coridor-2,aWall-y1Coridor+1,y1Coridor-3));
+                break;
+            case 4:
+                prisonWardsOnScheme.add(new PrisonWard(x1Coridor+1,x2Coridor-x1Coridor-2,aWall-y1Coridor+1,y1Coridor-3));
                 break;
         }
     }
@@ -261,7 +291,7 @@ public class PrisonScheme {
 
         switch (1) {
             case 1:
-                w1 = rand.nextInt((aWall-y2Coridor) / minSize) + 1;
+                w1 = rand.nextInt((aWall-y2Coridor) / minSize-1) + 1;
                 w1Size = (aWall-y2Coridor-1)/w1;
                 z = 1;
                 prisonWardsOnScheme.add(new PrisonWard(1, x1Coridor-2, 1, w1Size-2));
@@ -277,7 +307,7 @@ public class PrisonScheme {
                     z++;
                 }
             case 2:
-                w2 = rand.nextInt((cWall) / minSize) + 1;
+                w2 = rand.nextInt((cWall) / minSize-1) + 1;
                 w2Size = (cWall-1)/w2;
                 z = 1;
                 prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, bWall-dWall-x2Coridor-2, 1, w2Size-2));
@@ -293,7 +323,7 @@ public class PrisonScheme {
                     z++;
                 }
             case 3:
-                w3 = rand.nextInt((dWall) / minSize) + 1;
+                w3 = rand.nextInt((dWall) / minSize-1) + 1;
                 w3Size = (dWall-1)/w3;
                 z =1;
                 prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+1, w3Size-2, cWall, aWall-cWall-y2Coridor-1));
@@ -309,7 +339,7 @@ public class PrisonScheme {
                     z++;
                 }
             case 4:
-                w4 = rand.nextInt((bWall-x2Coridor) / minSize) + 1;
+                w4 = rand.nextInt((bWall-x2Coridor) / minSize-1) + 1;
                 w4Size = (bWall-x2Coridor-1)/w4;
                 z = 1;
                 prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, w4Size-2, aWall-y1Coridor+1, y1Coridor-3));
@@ -330,12 +360,11 @@ public class PrisonScheme {
     private void fillWards() {
         int sanitaryNook;
         for (PrisonWard ward: prisonWardsOnScheme){
-            System.out.println(ward.getEndX() + " " + ward.getEndY());
             prisonPlan[(int)ward.getStartX()][(int)ward.getStartY()] = Fields.WARD;
             prisonPlan[(int)ward.getStartX()][(int)ward.getEndY()] = Fields.WARD;
             prisonPlan[(int)ward.getEndX()][(int)ward.getStartY()] = Fields.WARD;
             prisonPlan[(int)ward.getEndX()][(int)ward.getEndY()] = Fields.WARD;
-             /*sanitaryNook = rand.nextInt(4)+1;
+             sanitaryNook = rand.nextInt(4)+1;
              switch (sanitaryNook) {
                  case 1:
                      sanitaryNooksOnScheme.add(new SanitaryNook(ward.getStartX(), ward.getStartY()));
@@ -349,7 +378,14 @@ public class PrisonScheme {
                  case 4:
                      sanitaryNooksOnScheme.add(new SanitaryNook(ward.getEndX()-SchemeGenerator.conditions.sizeOfSanitaryNook, ward.getEndY()-SchemeGenerator.conditions.sizeOfSanitaryNook));
                      break;
-             }*/
+             }
+        }
+        for (SanitaryNook nook: sanitaryNooksOnScheme) {
+            for (int w = (int)nook.getStartX(); w <= (int)nook.getEndX(); w++) {
+                for (int h = (int)nook.getStartY(); h <= (int)nook.getEndY(); h++) {
+                        prisonPlan[w][h] = Fields.SANITARY_NOOK;
+                }
+            }
         }
     }
 
