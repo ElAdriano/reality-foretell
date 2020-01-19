@@ -1,22 +1,21 @@
 package GUI.Controllers;
 
-import Management.ImageCreator;
+import Management.ImageHolder;
 import Management.SchemeGenerator;
-import Models.PrisonScheme;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
 
-import java.util.ArrayList;
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 
 public class Visualization {
-
-    private volatile ArrayList<Image> generatedSchemes;
-    private volatile ArrayList<Background> generatedSchemesBackgroundImages;
 
     @FXML
     private ProgressBar progressBar;
@@ -27,54 +26,52 @@ public class Visualization {
     @FXML
     private Pane schemeView;
 
-    public Visualization() {
-        generatedSchemes = new ArrayList<>();
-        generatedSchemesBackgroundImages = new ArrayList<>();
+    @FXML
+    private Button nextImageButton;
+    @FXML
+    private Button previousImageButton;
 
-        SchemeGenerator generator = new SchemeGenerator();
-        PrisonScheme prisonScheme = new PrisonScheme();
-        Image image = ImageCreator.createImage(prisonScheme.getPrisonPlan(), prisonScheme.getPlanSquareSize(), prisonScheme.getPlanSquareSize());
-        addNewGeneratedImage(image);
-        /*addNewGeneratedImage(image);*/
-        //generator.run();
-        //addNewGeneratedImage(generator.getLastGeneratedImage());
+    @FXML
+    private Label parameterInfoLabel;
+
+    public Visualization() throws InterruptedException {
+        SchemeGenerator schemeGenerator = new SchemeGenerator();
+        schemeGenerator.start();
+        schemeGenerator.join();
     }
 
     public void initialize() {
-        //showSavedConditions();
         currentSchemeRenderedIndex = 0;
         updateComponents();
     }
 
-    public void addNewGeneratedImage(Image image) {
-        generatedSchemes.add(image);
-        BackgroundImage backgroundImage = new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(
-                BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true));
-        generatedSchemesBackgroundImages.add(new Background(backgroundImage));
-    }
+    @FXML
+    private void saveCurrentlyShowedImage() throws IOException {
+        String path = this.getClass().getProtectionDomain().getCodeSource().getLocation().getPath() + "schemes/";
+        File schemesDirectory = new File(path);
 
-    private void showSavedConditions() {
-        System.out.println("maxBudget : " + SchemeGenerator.conditions.budget);
-        System.out.println("amountOfPrisoners : " + SchemeGenerator.conditions.amountOfPrisoners);
-        System.out.println("priceOfPrisonWard : " + SchemeGenerator.conditions.priceOfPrisonWard);
-        System.out.println("maxAmountOfPrisonersInPrisonWard : " + SchemeGenerator.conditions.maxAmountOfPrisonersInPrisonWard);
-        System.out.println("priceOfSanitaryNook : " + SchemeGenerator.conditions.priceOfSanitaryNook);
-        System.out.println("cameraRange : " + SchemeGenerator.conditions.cameraRange);
-        System.out.println("amountOfGenerations : " + SchemeGenerator.conditions.amountOfGenerations);
-        System.out.println("aDimensionOfPrison : " + SchemeGenerator.conditions.aDimensionOfPrison);
-        System.out.println("bDimensionOfPrison : " + SchemeGenerator.conditions.bDimensionOfPrison);
-        System.out.println("cDimensionOfPrison : " + SchemeGenerator.conditions.cDimensionOfPrison);
-        System.out.println("dDimensionOfPrison : " + SchemeGenerator.conditions.dDimensionOfPrison);
+        if (!schemesDirectory.exists()) {
+            schemesDirectory.mkdir();
+        }
+
+        Image imageToSave = ImageHolder.getImageByIndex(currentSchemeRenderedIndex);
+        String fileName = "Scheme_" + (currentSchemeRenderedIndex + 1);
+
+        String extension = "png";
+        File savedFile = new File(path + fileName + "." + extension);
+        ImageIO.write(SwingFXUtils.fromFXImage(imageToSave, null), extension, savedFile);
     }
 
     @FXML
     public void onNextImageButtonClick(ActionEvent actionEvent) {
+        int amountOfImages = ImageHolder.getGeneratedSchemesAmount();
         currentSchemeRenderedIndex++;
-        if (currentSchemeRenderedIndex + 1 >= generatedSchemesBackgroundImages.size()) {
+        if (currentSchemeRenderedIndex + 1 >= amountOfImages) {
             disableButton(actionEvent);
         }
-        if (currentSchemeRenderedIndex < generatedSchemesBackgroundImages.size()) {
+        if (currentSchemeRenderedIndex < amountOfImages) {
             updateComponents();
+            previousImageButton.setDisable(false);
         }
     }
 
@@ -86,13 +83,23 @@ public class Visualization {
         }
         if (currentSchemeRenderedIndex >= 0) {
             updateComponents();
+            nextImageButton.setDisable(false);
         }
     }
 
     private void updateComponents() {
-        progressBar.setProgress((double)(currentSchemeRenderedIndex + 1) / generatedSchemes.size());
-        progressLabel.setText(String.valueOf((currentSchemeRenderedIndex + 1) / generatedSchemes.size()));
-        schemeView.setBackground(generatedSchemesBackgroundImages.get(currentSchemeRenderedIndex));
+        int amountOfSchemes = ImageHolder.getGeneratedSchemesAmount();
+        if (amountOfSchemes == 0) {
+            return;
+        } else {
+            progressBar.setProgress((double) (currentSchemeRenderedIndex + 1) / amountOfSchemes);
+            progressLabel.setText((currentSchemeRenderedIndex + 1) + " / " + amountOfSchemes);
+
+            parameterInfoLabel.setText("Wymiary budynku:\nWysokość : " + SchemeGenerator.conditions.aDimensionOfPrison + "\n" +
+                    "Szerokość : " + SchemeGenerator.conditions.bDimensionOfPrison + "\n" +
+                    "Cena budowy : " + ImageHolder.getPriceToImage(currentSchemeRenderedIndex));
+            schemeView.setBackground(ImageHolder.getBackground(currentSchemeRenderedIndex));
+        }
     }
 
     private void disableButton(ActionEvent actionEvent) {

@@ -1,7 +1,6 @@
 package Models;
 
 import Management.Fields;
-import Management.ImageCreator;
 import Management.SchemeGenerator;
 import Models.*;
 import javafx.scene.image.Image;
@@ -20,7 +19,6 @@ public class PrisonScheme {
     private MonitoringRoom monitoringRoom;
     private SanitaryNook sanitaryNook;
 
-    private Image imageToShow;
     private Fields[][] prisonPlan;
     private int planSquareSize;
 
@@ -50,6 +48,7 @@ public class PrisonScheme {
     private Random rand;
 
     private double rate;
+    private double price;
 
     public PrisonScheme() {
         this.prisonWardsOnScheme = new ArrayList<>();
@@ -391,20 +390,8 @@ public class PrisonScheme {
         }
     }
 
-    private void createImageToShow() {
-        imageToShow = ImageCreator.createImage(prisonPlan, planSquareSize, planSquareSize);
-    }
-
     public void arrangePrisonScheme() {
         //TODO initializing PrisonScheme components and whole prison
-    }
-
-    public void updateImage(Image image) {
-        imageToShow = image;
-    }
-
-    public Image getImageToShow() {
-        return imageToShow;
     }
 
     public int getPlanSquareSize() {
@@ -415,7 +402,15 @@ public class PrisonScheme {
         return rate;
     }
 
+    public void setRate(double rate) {
+        this.rate = rate;
+    }
+
     public Fields[][] getPrisonPlan() {
         return prisonPlan;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
