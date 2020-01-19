@@ -1,7 +1,7 @@
 package Management;
 
 import javafx.scene.image.Image;
-
+import Models.PrisonScheme;
 import java.util.ArrayList;
 
 public class SchemeGenerator extends Thread implements GeneticAlgorithm {
