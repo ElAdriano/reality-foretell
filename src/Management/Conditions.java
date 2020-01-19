@@ -1,6 +1,7 @@
 package Management;
 
 public class Conditions {
+
     public double budget;
     public int amountOfPrisoners;
     public double priceOfPrisonWard;
@@ -40,4 +41,5 @@ public class Conditions {
         minSizeOfWard = 10;
         sizeOfSanitaryNook = 5;
     }
+
 }

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class DataForm {
+
     @FXML
     private Slider maxBudgetSlider;
     @FXML
@@ -120,4 +121,5 @@ public class DataForm {
         SchemeGenerator.conditions.cameraRange = Math.round(100.0 * cameraRangeSlider.getValue()) / 100.0;
         SchemeGenerator.conditions.amountOfGenerations = (int) Math.round(generationsAmountSlider.getValue());
     }
+    
 }

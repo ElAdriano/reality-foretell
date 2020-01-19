@@ -1,8 +1,12 @@
 package Models;
 
-public class PrisonWard extends ComplexModel{
+public class PrisonWard extends ComplexModel {
 
-    public PrisonWard(double startX, double sizeX, double startY, double sizeY){
-        super(startX, sizeX, startY, sizeY, 100000, 1);
+    public static final double price = 100000;
+    public static final double priority = 1;
+
+    public PrisonWard(double startX, double sizeX, double startY, double sizeY) {
+        super(startX, sizeX, startY, sizeY);
     }
+    
 }

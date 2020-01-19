@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 
 public class ImageCreator {
+    
     public static Image createImage(Fields[][] prisonPlan, int size) {
         int height = size;
         int width = size;
@@ -63,4 +64,5 @@ public class ImageCreator {
         }
         return returningValue;
     }
+
 }

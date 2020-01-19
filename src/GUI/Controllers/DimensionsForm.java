@@ -16,10 +16,10 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class DimensionsForm {
+
     private final double DEFAULT_LAYOUT_Y = 83;
     private final double INITIAL_HEIGHT = 120;
 
-    /* Sliders for DimensionsForm.fxml */
     @FXML
     private Slider aDimensionSlider;
     @FXML
@@ -29,7 +29,6 @@ public class DimensionsForm {
     @FXML
     private Slider dDimensionSlider;
 
-    /* Monitors for DimensionsForm.fxml */
     @FXML
     private Label aDimensionMonitor;
     @FXML
@@ -41,9 +40,9 @@ public class DimensionsForm {
     @FXML
     private Button startProcessButton;
     @FXML
-    private Pane PrisonBuilding;
+    private Pane prisonBuilding;
     @FXML
-    private Pane OutSidePrisonBuilding;
+    private Pane outSidePrisonBuilding;
     @FXML
     private Pane proTipWindow;
     @FXML
@@ -65,14 +64,14 @@ public class DimensionsForm {
         aDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             aDimensionSlider.setValue((double) newValue);
             aDimensionMonitor.setText(sizeFormat.format(newValue));
-            PrisonBuilding.setLayoutY(DEFAULT_LAYOUT_Y - ((double) newValue - INITIAL_HEIGHT) / 2);
-            PrisonBuilding.setPrefHeight((double) newValue);
-            OutSidePrisonBuilding.setMaxHeight((double) newValue - 5);
+            prisonBuilding.setLayoutY(DEFAULT_LAYOUT_Y - ((double) newValue - INITIAL_HEIGHT) / 2);
+            prisonBuilding.setPrefHeight((double) newValue);
+            outSidePrisonBuilding.setMaxHeight((double) newValue - 5);
 
             if (aDimensionSlider.getValue() - cDimensionSlider.getValue() < 5) {
                 cDimensionSlider.setValue((double) newValue - 5);
                 cDimensionMonitor.setText(sizeFormat.format(cDimensionSlider.getValue()));
-                OutSidePrisonBuilding.setPrefHeight((double) newValue - 5);
+                outSidePrisonBuilding.setPrefHeight((double) newValue - 5);
             }
         });
 
@@ -82,24 +81,22 @@ public class DimensionsForm {
             bDimensionSlider.setValue((double) newValue);
             bDimensionMonitor.setText(sizeFormat.format((double) newValue));
 
-            PrisonBuilding.setPrefWidth((double) newValue);
-            PrisonBuilding.setLayoutX(PrisonBuilding.getLayoutX() - ((double) newValue - (double) oldValue) / 2);
+            prisonBuilding.setPrefWidth((double) newValue);
+            prisonBuilding.setLayoutX(prisonBuilding.getLayoutX() - ((double) newValue - (double) oldValue) / 2);
 
-            OutSidePrisonBuilding.setPrefWidth((double) newValue - OutSidePrisonBuilding.getLayoutX());
-            dDimensionSlider.setValue((double) newValue - OutSidePrisonBuilding.getLayoutX());
+            outSidePrisonBuilding.setPrefWidth((double) newValue - outSidePrisonBuilding.getLayoutX());
+            dDimensionSlider.setValue((double) newValue - outSidePrisonBuilding.getLayoutX());
             dDimensionMonitor.setText(sizeFormat.format(dDimensionSlider.getValue()));
 
-            // case when new width for PrisonBuilding is too wide ; calculated width for OutSidePrisonBuilding is greater than max
-            if ((double) newValue - OutSidePrisonBuilding.getLayoutX() > dDimensionSlider.getMax()) {
-                PrisonBuilding.setPrefWidth(OutSidePrisonBuilding.getLayoutX() + dDimensionSlider.getMax());
-                bDimensionSlider.setValue(OutSidePrisonBuilding.getLayoutX() + dDimensionSlider.getMax());
+            if ((double) newValue - outSidePrisonBuilding.getLayoutX() > dDimensionSlider.getMax()) {
+                prisonBuilding.setPrefWidth(outSidePrisonBuilding.getLayoutX() + dDimensionSlider.getMax());
+                bDimensionSlider.setValue(outSidePrisonBuilding.getLayoutX() + dDimensionSlider.getMax());
                 bDimensionMonitor.setText(sizeFormat.format(bDimensionSlider.getValue()));
             }
 
-            // case when new width for PrisonBuilding is lesser than OutSidePrisonBuilding's layoutX => no dDimension seen
-            if ((double) newValue - OutSidePrisonBuilding.getLayoutX() <= 5) {
-                OutSidePrisonBuilding.setPrefWidth(5);
-                OutSidePrisonBuilding.setLayoutX((double) newValue - 5);
+            if ((double) newValue - outSidePrisonBuilding.getLayoutX() <= 5) {
+                outSidePrisonBuilding.setPrefWidth(5);
+                outSidePrisonBuilding.setLayoutX((double) newValue - 5);
                 dDimensionSlider.setValue(5);
                 dDimensionMonitor.setText(sizeFormat.format(dDimensionSlider.getValue()));
             }
@@ -109,10 +106,10 @@ public class DimensionsForm {
 
         cDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!aDimensionSlider.isValueChanging()) {
-                if ((double) newValue <= OutSidePrisonBuilding.getMaxHeight()) {
-                    OutSidePrisonBuilding.setPrefHeight((double) newValue);
+                if ((double) newValue <= outSidePrisonBuilding.getMaxHeight()) {
+                    outSidePrisonBuilding.setPrefHeight((double) newValue);
                 } else {
-                    cDimensionSlider.setValue(OutSidePrisonBuilding.getMaxHeight());
+                    cDimensionSlider.setValue(outSidePrisonBuilding.getMaxHeight());
                 }
                 cDimensionMonitor.setText(String.valueOf(sizeFormat.format(cDimensionSlider.getValue())));
             }
@@ -120,16 +117,16 @@ public class DimensionsForm {
 
         dDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!bDimensionSlider.isValueChanging()) {
-                if (PrisonBuilding.getWidth() - (double) newValue >= 5) {
-                    OutSidePrisonBuilding.setPrefWidth((double) newValue);
-                    OutSidePrisonBuilding.setLayoutX(PrisonBuilding.getWidth() - (double) newValue);
+                if (prisonBuilding.getWidth() - (double) newValue >= 5) {
+                    outSidePrisonBuilding.setPrefWidth((double) newValue);
+                    outSidePrisonBuilding.setLayoutX(prisonBuilding.getWidth() - (double) newValue);
                     dDimensionSlider.setValue((double) newValue);
                     dDimensionMonitor.setText(sizeFormat.format((double) newValue));
                 } else {
-                    OutSidePrisonBuilding.setPrefWidth(PrisonBuilding.getWidth() - 5);
-                    OutSidePrisonBuilding.setLayoutX(5);
-                    dDimensionSlider.setValue(PrisonBuilding.getWidth() - 5);
-                    dDimensionMonitor.setText(sizeFormat.format(PrisonBuilding.getWidth() - 5));
+                    outSidePrisonBuilding.setPrefWidth(prisonBuilding.getWidth() - 5);
+                    outSidePrisonBuilding.setLayoutX(5);
+                    dDimensionSlider.setValue(prisonBuilding.getWidth() - 5);
+                    dDimensionMonitor.setText(sizeFormat.format(prisonBuilding.getWidth() - 5));
                 }
             }
         });
@@ -141,16 +138,16 @@ public class DimensionsForm {
         loadValues(cDimensionSlider, cDimensionMonitor, SchemeGenerator.conditions.cDimensionOfPrison);
         loadValues(dDimensionSlider, dDimensionMonitor, SchemeGenerator.conditions.dDimensionOfPrison);
 
-        PrisonBuilding.setLayoutY(PrisonBuilding.getLayoutY() - (aDimensionSlider.getValue() - PrisonBuilding.getPrefHeight()) / 2);
-        PrisonBuilding.setPrefHeight(aDimensionSlider.getValue());
+        prisonBuilding.setLayoutY(prisonBuilding.getLayoutY() - (aDimensionSlider.getValue() - prisonBuilding.getPrefHeight()) / 2);
+        prisonBuilding.setPrefHeight(aDimensionSlider.getValue());
 
-        PrisonBuilding.setLayoutX(PrisonBuilding.getLayoutX() - (bDimensionSlider.getValue() - PrisonBuilding.getPrefWidth()) / 2);
-        PrisonBuilding.setPrefWidth(bDimensionSlider.getValue());
+        prisonBuilding.setLayoutX(prisonBuilding.getLayoutX() - (bDimensionSlider.getValue() - prisonBuilding.getPrefWidth()) / 2);
+        prisonBuilding.setPrefWidth(bDimensionSlider.getValue());
 
-        OutSidePrisonBuilding.setPrefHeight(cDimensionSlider.getValue());
+        outSidePrisonBuilding.setPrefHeight(cDimensionSlider.getValue());
 
-        OutSidePrisonBuilding.setPrefWidth(dDimensionSlider.getValue());
-        OutSidePrisonBuilding.setLayoutX(PrisonBuilding.getPrefWidth() - dDimensionSlider.getValue());
+        outSidePrisonBuilding.setPrefWidth(dDimensionSlider.getValue());
+        outSidePrisonBuilding.setLayoutX(prisonBuilding.getPrefWidth() - dDimensionSlider.getValue());
     }
 
     private void loadValues(Slider slider, Label monitor, double value) {
@@ -220,4 +217,5 @@ public class DimensionsForm {
         Stage renderedStage = (Stage) startProcessButton.getScene().getWindow();
         renderedStage.setScene(nextStage.getScene());
     }
+
 }

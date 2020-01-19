@@ -1,8 +1,12 @@
 package Models;
 
-public class LightBulb extends Model{
+public class LightBulb extends Model {
 
-    public LightBulb(double x, double y){
-        super(x, 1, y, 1, 10, 0.33);
+    public static final double price = 10;
+    public static final double priority = 0.33;
+
+    public LightBulb(double x, double y) {
+        super(x, 1, y, 1);
     }
+    
 }

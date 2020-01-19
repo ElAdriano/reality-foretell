@@ -23,4 +23,5 @@ public class Master extends Application {
         primaryStage.getIcons().add(new Image("/GUI/Backgrounds/RealityForetellIcon.png"));
         primaryStage.show();
     }
+
 }

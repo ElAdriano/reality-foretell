@@ -8,18 +8,14 @@ public class Model {
     private double startY;
     private double sizeY;
     private double endY;
-    private double price;
-    private double priority;
 
-    public Model(double startX, double sizeX, double startY, double sizeY, double price, double priority) {
+    public Model(double startX, double sizeX, double startY, double sizeY) {
         this.startX = startX;
         this.sizeX = sizeX;
         this.endX = startX + sizeX;
         this.startY = startY;
         this.sizeY = sizeY;
         this.endY = startY + sizeY;
-        this.price = price;
-        this.priority = priority;
     }
 
     public void rotate() {
@@ -83,13 +79,5 @@ public class Model {
         this.endY = endY;
         this.startY = this.endY - this.sizeY;
     }
-
-    public double getPrice() {
-        return this.price;
-    }
-
-    public double getPriority() {
-        return this.priority;
-    }
-
+    
 }

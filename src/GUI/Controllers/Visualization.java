@@ -106,4 +106,5 @@ public class Visualization {
         Button sourceButton = (Button) actionEvent.getSource();
         sourceButton.setDisable(true);
     }
+    
 }
