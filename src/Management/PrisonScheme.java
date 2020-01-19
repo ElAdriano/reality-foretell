@@ -36,6 +36,11 @@ public class PrisonScheme {
     private int w3;
     private int w4;
 
+    private int w1Size;
+    private int w2Size;
+    private int w3Size;
+    private int w4Size;
+
     private int rMonitorRoomPlacement;
     private int extraCorridor;
 
@@ -151,7 +156,7 @@ public class PrisonScheme {
             case 1:
                 for (int w = 1; w < bWall-1; w++) {
                     for (int h = 1; h < aWall-1; h++) {
-                        if (  h <= aWall - y1Coridor && w <= x1Coridor && h >= aWall - y2Coridor ) {
+                        if (  h < aWall - y1Coridor && w < x1Coridor && h > aWall - y2Coridor ) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
                         }
                     }
@@ -161,7 +166,7 @@ public class PrisonScheme {
             case 2:
                 for (int w = 1; w < bWall-1; w++) {
                     for (int h = 1; h < aWall-1; h++) {
-                        if (  h >= cWall && w <= bWall-dWall && h <= aWall - y2Coridor && w >= x2Coridor) {
+                        if (  h >= cWall && w < bWall-dWall && h < aWall - y2Coridor && w > x2Coridor) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
                         }
                     }
@@ -171,7 +176,7 @@ public class PrisonScheme {
             case 3:
                 for (int w = 1; w < bWall-1; w++) {
                     for (int h = 1; h < aWall-1; h++) {
-                        if ( w <= x1Coridor && h >= aWall - y1Coridor ) {
+                        if ( w < x1Coridor && h > aWall - y1Coridor ) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
                         }
                     }
@@ -181,7 +186,7 @@ public class PrisonScheme {
             case 4:
                 for (int w = 1; w < bWall-1; w++) {
                     for (int h = 1; h < aWall-1; h++) {
-                        if ( w >= x1Coridor && h >= aWall - y1Coridor && w <= x2Coridor) {
+                        if ( w > x1Coridor && h > aWall - y1Coridor && w < x2Coridor) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
                         }
                     }
@@ -229,14 +234,14 @@ public class PrisonScheme {
                 break;
             case 2:
                 for (int i = 0; i < dS; i++) {
-                    prisonPlan[bWall-1][aWall - (y1Coridor+y2Coridor-dS)/2+i] = Fields.DOOR;
+                    prisonPlan[bWall-1][aWall - (y1Coridor+y2Coridor+dS)/2+i] = Fields.DOOR;
                 }
                 break;
             case 3:
                 switch (extraCorridor) {
                     case 2:
                         for (int i = 0; i < dS; i++) {
-                            prisonPlan[0][aWall - (y1Coridor+y2Coridor-dS)/2+i] = Fields.DOOR;
+                            prisonPlan[0][aWall - (y1Coridor+y2Coridor+dS)/2+i] = Fields.DOOR;
                         }
                         break;
                     case 1:
@@ -252,90 +257,85 @@ public class PrisonScheme {
     private void addWards() {
 
         int minSize = SchemeGenerator.conditions.minSizeOfWard;
+        int z;
 
         switch (1) {
             case 1:
                 w1 = rand.nextInt((aWall-y2Coridor) / minSize) + 1;
-                for (int i = 1; i < w1; i++) {
+                w1Size = (aWall-y2Coridor-1)/w1;
+                z = 1;
+                prisonWardsOnScheme.add(new PrisonWard(1, x1Coridor-2, 1, w1Size-2));
+                while (z<w1) {
                     for (int w = 1; w < x1Coridor; w++) {
                         for (int h = 1; h < aWall - y2Coridor; h++) {
-                            if ( h ==  i*(aWall-y2Coridor)/w1 ) {
+                            if ( h ==  z*w1Size ) {
                                 prisonPlan[w][h] = Fields.WALL;
-                            } else {
-                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
-                }
-                for (int i = 0; i < w1; i++) {
-                    prisonWardsOnScheme.add(new PrisonWard(1, x1Coridor-1, (int) (i*(double)(aWall-y2Coridor)/w1)+1, (int)((double)(aWall-y2Coridor-w1+1)/w1)-1));
+                    prisonWardsOnScheme.add(new PrisonWard(1, x1Coridor-2, 1+z*(w1Size), w1Size-2));
+                    z++;
                 }
             case 2:
                 w2 = rand.nextInt((cWall) / minSize) + 1;
-                for (int i = 1; i < w2; i++) {
+                w2Size = (cWall-1)/w2;
+                z = 1;
+                prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, bWall-dWall-x2Coridor-2, 1, w2Size-2));
+                while (z<w2) {
                     for (int w = x2Coridor+1; w < bWall-dWall; w++) {
                         for (int h = 1; h < cWall; h++) {
-                            if ( h ==  i*(cWall)/w2 ) {
+                            if ( h ==  z*w2Size ) {
                                 prisonPlan[w][h] = Fields.WALL;
-                            } else {
-                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
-                }
-                for (int i = 0; i < w1; i++) {
-                    prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, (bWall-dWall-x2Coridor-1), i*(cWall)/w2, (cWall-w2+1)/w2));
+                    prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, bWall-dWall-x2Coridor-2, 1+z*(w2Size), w2Size-2));
+                    z++;
                 }
             case 3:
                 w3 = rand.nextInt((dWall) / minSize) + 1;
-                for (int i = 1; i < w3; i++) {
+                w3Size = (dWall-1)/w3;
+                z =1;
+                prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+1, w3Size-2, cWall, aWall-cWall-y2Coridor-1));
+                while (z<w3) {
                     for (int w = bWall-dWall; w < bWall; w++) {
                         for (int h = cWall + 1; h < aWall - y2Coridor; h++) {
-                            if ( w ==  bWall - dWall + i*(dWall)/w3 ) {
+                            if ( w ==  bWall - dWall + z*w3Size ) {
                                 prisonPlan[w][h] = Fields.WALL;
-                            } else {
-                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
-                }
-                for (int i = 0; i < w3; i++) {
-                    prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+i*dWall/w3+1, (dWall-w3+1)/w3, cWall+1, (aWall-cWall-y2Coridor-1)));
+                    prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+1+z*w3Size, w3Size-2, cWall, aWall-cWall-y2Coridor-1));
+                    z++;
                 }
             case 4:
                 w4 = rand.nextInt((bWall-x2Coridor) / minSize) + 1;
-                for (int i = 1; i < w4; i++) {
+                w4Size = (bWall-x2Coridor-1)/w4;
+                z = 1;
+                prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, w4Size-2, aWall-y1Coridor+1, y1Coridor-3));
+                while (z < w4) {
                     for (int w = x2Coridor+1; w < bWall; w++) {
                         for (int h = aWall-y1Coridor+1; h < aWall; h++) {
-                            if ( w ==  x2Coridor + i*(bWall-x2Coridor)/w4 ) {
+                            if ( w ==  x2Coridor + z*w4Size ) {
                                 prisonPlan[w][h] = Fields.WALL;
-                            } else {
-                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
+                    prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1+z*w4Size, w4Size-2, aWall-y1Coridor+1, y1Coridor-3));
+                    z++;
                 }
-                for (int i = 0; i < w1; i++) {
-                    prisonWardsOnScheme.add(new PrisonWard(x2Coridor+i*(bWall-x2Coridor)/w4+1, (bWall-x2Coridor-w4+1)/w4, i*(aWall-y2Coridor)/w1, (aWall-y2Coridor-w1+1)/w1));
-                }
-        }
-        //prisonPlan[57][82] = Fields.SANITARY_NOOK;
-        for (PrisonWard ward: prisonWardsOnScheme) {
-            //System.out.println((int)ward.getEndX() + " " + (int)ward.getEndY());
-            //prisonPlan[(int)ward.getEndX()][(int)ward.getEndY()] = Fields.SANITARY_NOOK;
-            for (int w = (int)ward.getStartX(); w <= (int)ward.getEndX(); w++) {
-                for (int h = (int)ward.getStartY(); h <= (int)ward.getEndY(); h++) {
-                    //prisonPlan[w][h] = Fields.SANITARY_NOOK;
-                    //System.out.println(w + " " + h + "\n");
-                }
-            }
         }
     }
 
     private void fillWards() {
         int sanitaryNook;
         for (PrisonWard ward: prisonWardsOnScheme){
-             sanitaryNook = rand.nextInt(4)+1;
+            System.out.println(ward.getEndX() + " " + ward.getEndY());
+            prisonPlan[(int)ward.getStartX()][(int)ward.getStartY()] = Fields.WARD;
+            prisonPlan[(int)ward.getStartX()][(int)ward.getEndY()] = Fields.WARD;
+            prisonPlan[(int)ward.getEndX()][(int)ward.getStartY()] = Fields.WARD;
+            prisonPlan[(int)ward.getEndX()][(int)ward.getEndY()] = Fields.WARD;
+             /*sanitaryNook = rand.nextInt(4)+1;
              switch (sanitaryNook) {
                  case 1:
                      sanitaryNooksOnScheme.add(new SanitaryNook(ward.getStartX(), ward.getStartY()));
@@ -349,14 +349,7 @@ public class PrisonScheme {
                  case 4:
                      sanitaryNooksOnScheme.add(new SanitaryNook(ward.getEndX()-SchemeGenerator.conditions.sizeOfSanitaryNook, ward.getEndY()-SchemeGenerator.conditions.sizeOfSanitaryNook));
                      break;
-             }
-        }
-        for (SanitaryNook nook: sanitaryNooksOnScheme) {
-            for (int w = (int)nook.getStartX(); w <= (int)nook.getEndX(); w++) {
-                for (int h = (int)nook.getStartY(); h <= (int)nook.getEndY(); h++) {
-                    //prisonPlan[w][h] = Fields.SANITARY_NOOK;
-                }
-            }
+             }*/
         }
     }
 
