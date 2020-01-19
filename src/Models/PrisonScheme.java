@@ -1,5 +1,8 @@
-package Management;
+package Models;
 
+import Management.Fields;
+import Management.ImageCreator;
+import Management.SchemeGenerator;
 import Models.*;
 import javafx.scene.image.Image;
 
