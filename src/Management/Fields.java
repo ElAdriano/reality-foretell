@@ -5,6 +5,7 @@ public enum Fields {
     CAMERA,
     DOOR,
     WALL,
+    WARD,
     LIGHT_BULB,
     MONITORING_ROOM,
     BUNK,

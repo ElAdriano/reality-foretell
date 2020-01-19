@@ -1,8 +1,11 @@
 package Models;
 
+import Management.SchemeGenerator;
+
 public class SanitaryNook extends ComplexModel{
 
-    public SanitaryNook(double startX, double sizeX, double startY, double sizeY, Door door, Camera camera, LightBulb lightBulb, Window window){
-        super(startX, sizeX, startY, sizeY, 5000, 0.5);
+    public SanitaryNook(double startX, double startY){
+        super(startX, SchemeGenerator.conditions.sizeOfSanitaryNook, startY, SchemeGenerator.conditions.sizeOfSanitaryNook, 5000, 0.5);
+
     }
 }

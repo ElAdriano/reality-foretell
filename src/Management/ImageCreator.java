@@ -38,7 +38,10 @@ public class ImageCreator {
                 returningValue = 12632256; // TODO
                 break;
             case SANITARY_NOOK:
-                returningValue = 12632256; // TODO
+                returningValue = 65280;
+                break;
+            case WARD:
+                returningValue = 67000;
                 break;
             case WINDOW:
                 returningValue = 255;

@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class PrisonScheme {
-    private ArrayList<PrisonWard> prisonWards;
+    private ArrayList<PrisonWard> prisonWardsOnScheme;
+    private ArrayList<SanitaryNook> sanitaryNooksOnScheme;
     private ArrayList<Door> doorsOnScheme;
     private ArrayList<LightBulb> lightBulbsOnScheme;
     private ArrayList<Camera> camerasOnScheme;
@@ -43,7 +44,8 @@ public class PrisonScheme {
     private double rate;
 
     public PrisonScheme() {
-        this.camerasOnScheme = new ArrayList<>();
+        this.prisonWardsOnScheme = new ArrayList<>();
+        this.sanitaryNooksOnScheme = new ArrayList<>();
         this.doorsOnScheme = new ArrayList<>();
         this.lightBulbsOnScheme = new ArrayList<>();
         this.camerasOnScheme = new ArrayList<>();
@@ -71,7 +73,7 @@ public class PrisonScheme {
         addMonitoringRoom();
         addEntranceDoor();
         addWards();
-        addSanitaryNooks();
+        fillWards();
     }
 
     private void fillAsOutsideArea() {
@@ -256,65 +258,106 @@ public class PrisonScheme {
                 w1 = rand.nextInt((aWall-y2Coridor) / minSize) + 1;
                 for (int i = 1; i < w1; i++) {
                     for (int w = 1; w < x1Coridor; w++) {
-                        for (int h = 0; h < aWall - y2Coridor; h++) {
+                        for (int h = 1; h < aWall - y2Coridor; h++) {
                             if ( h ==  i*(aWall-y2Coridor)/w1 ) {
                                 prisonPlan[w][h] = Fields.WALL;
+                            } else {
+                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
                 }
-                prisonWards.add(new PrisonWard(1,1,1, 1));
                 for (int i = 0; i < w1; i++) {
-                    //prisonWards.add(new PrisonWard(1, x1Coridor-1, (int) (i*(double)(aWall-y2Coridor)/w1)+1, (int)((double)(aWall-y2Coridor-w1+1)/w1)));
-                    //prisonWards.add(new PrisonWard(0,1,0, 1));
+                    prisonWardsOnScheme.add(new PrisonWard(1, x1Coridor-1, (int) (i*(double)(aWall-y2Coridor)/w1)+1, (int)((double)(aWall-y2Coridor-w1+1)/w1)-1));
                 }
             case 2:
                 w2 = rand.nextInt((cWall) / minSize) + 1;
                 for (int i = 1; i < w2; i++) {
-                    for (int w = x2Coridor; w < bWall-dWall; w++) {
-                        for (int h = 0; h < cWall; h++) {
+                    for (int w = x2Coridor+1; w < bWall-dWall; w++) {
+                        for (int h = 1; h < cWall; h++) {
                             if ( h ==  i*(cWall)/w2 ) {
                                 prisonPlan[w][h] = Fields.WALL;
+                            } else {
+                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
                 }
                 for (int i = 0; i < w1; i++) {
-                    //prisonWards.add(new PrisonWard(x2Coridor+1, (bWall-dWall-x2Coridor-1), i*(cWall)/w2, (cWall-w2+1)/w2));
+                    prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, (bWall-dWall-x2Coridor-1), i*(cWall)/w2, (cWall-w2+1)/w2));
                 }
             case 3:
                 w3 = rand.nextInt((dWall) / minSize) + 1;
                 for (int i = 1; i < w3; i++) {
                     for (int w = bWall-dWall; w < bWall; w++) {
-                        for (int h = cWall; h < aWall - y2Coridor; h++) {
+                        for (int h = cWall + 1; h < aWall - y2Coridor; h++) {
                             if ( w ==  bWall - dWall + i*(dWall)/w3 ) {
                                 prisonPlan[w][h] = Fields.WALL;
+                            } else {
+                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
                 }
                 for (int i = 0; i < w3; i++) {
-                    //prisonWards.add(new PrisonWard(bWall-dWall+i*dWall/w3+1, (dWall-w3+1)/w3, cWall+1, (aWall-cWall-y2Coridor-1)));
+                    prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+i*dWall/w3+1, (dWall-w3+1)/w3, cWall+1, (aWall-cWall-y2Coridor-1)));
                 }
             case 4:
                 w4 = rand.nextInt((bWall-x2Coridor) / minSize) + 1;
                 for (int i = 1; i < w4; i++) {
                     for (int w = x2Coridor+1; w < bWall; w++) {
-                        for (int h = aWall-y1Coridor; h < aWall; h++) {
+                        for (int h = aWall-y1Coridor+1; h < aWall; h++) {
                             if ( w ==  x2Coridor + i*(bWall-x2Coridor)/w4 ) {
                                 prisonPlan[w][h] = Fields.WALL;
+                            } else {
+                                prisonPlan[w][h] = Fields.WARD;
                             }
                         }
                     }
                 }
                 for (int i = 0; i < w1; i++) {
-                    //prisonWards.add(new PrisonWard(x2Coridor+i*(bWall-x2Coridor)/w4+1, (bWall-x2Coridor-w4+1)/w4, i*(aWall-y2Coridor)/w1, (aWall-y2Coridor-w1+1)/w1));
+                    prisonWardsOnScheme.add(new PrisonWard(x2Coridor+i*(bWall-x2Coridor)/w4+1, (bWall-x2Coridor-w4+1)/w4, i*(aWall-y2Coridor)/w1, (aWall-y2Coridor-w1+1)/w1));
                 }
+        }
+        //prisonPlan[57][82] = Fields.SANITARY_NOOK;
+        for (PrisonWard ward: prisonWardsOnScheme) {
+            //System.out.println((int)ward.getEndX() + " " + (int)ward.getEndY());
+            //prisonPlan[(int)ward.getEndX()][(int)ward.getEndY()] = Fields.SANITARY_NOOK;
+            for (int w = (int)ward.getStartX(); w <= (int)ward.getEndX(); w++) {
+                for (int h = (int)ward.getStartY(); h <= (int)ward.getEndY(); h++) {
+                    //prisonPlan[w][h] = Fields.SANITARY_NOOK;
+                    //System.out.println(w + " " + h + "\n");
+                }
+            }
         }
     }
 
-    private void addSanitaryNooks() {
-
+    private void fillWards() {
+        int sanitaryNook;
+        for (PrisonWard ward: prisonWardsOnScheme){
+             sanitaryNook = rand.nextInt(4)+1;
+             switch (sanitaryNook) {
+                 case 1:
+                     sanitaryNooksOnScheme.add(new SanitaryNook(ward.getStartX(), ward.getStartY()));
+                     break;
+                 case 2:
+                     sanitaryNooksOnScheme.add(new SanitaryNook(ward.getEndX()-SchemeGenerator.conditions.sizeOfSanitaryNook, ward.getStartY()));
+                     break;
+                 case 3:
+                     sanitaryNooksOnScheme.add(new SanitaryNook(ward.getStartX(), ward.getEndY()-SchemeGenerator.conditions.sizeOfSanitaryNook));
+                     break;
+                 case 4:
+                     sanitaryNooksOnScheme.add(new SanitaryNook(ward.getEndX()-SchemeGenerator.conditions.sizeOfSanitaryNook, ward.getEndY()-SchemeGenerator.conditions.sizeOfSanitaryNook));
+                     break;
+             }
+        }
+        for (SanitaryNook nook: sanitaryNooksOnScheme) {
+            for (int w = (int)nook.getStartX(); w <= (int)nook.getEndX(); w++) {
+                for (int h = (int)nook.getStartY(); h <= (int)nook.getEndY(); h++) {
+                    //prisonPlan[w][h] = Fields.SANITARY_NOOK;
+                }
+            }
+        }
     }
 
     private void createImageToShow() {
