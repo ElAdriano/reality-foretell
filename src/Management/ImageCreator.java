@@ -61,6 +61,9 @@ public class ImageCreator {
             case EMPTY:
                 returningValue = 0;
                 break;
+            case TECHNICAL_ROOM:
+                returningValue = 16711680;
+                break;
         }
         return returningValue;
     }
