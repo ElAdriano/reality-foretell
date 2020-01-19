@@ -260,7 +260,6 @@ public class PrisonScheme {
                 for (int i = 0; i < dS; i++) {
                     prisonPlan[(x2Coridor+x1Coridor-dS)/2+i][0] = Fields.DOOR;
                 }
-                prisonPlan[(x2Coridor+x1Coridor)/2][0] = Fields.DOOR;
                 break;
             case 2:
                 for (int i = 0; i < dS; i++) {
@@ -276,7 +275,7 @@ public class PrisonScheme {
                         break;
                     case 1:
                         for (int i = 0; i < dS; i++) {
-                            prisonPlan[(x2Coridor+x1Coridor-dS)/2+i][bWall] = Fields.DOOR;
+                            prisonPlan[(x2Coridor+x1Coridor-dS)/2+i][aWall-1] = Fields.DOOR;
                         }
                         break;
                 }
@@ -291,7 +290,7 @@ public class PrisonScheme {
 
         switch (1) {
             case 1:
-                w1 = rand.nextInt((aWall-y2Coridor) / minSize-1) + 1;
+                w1 = rand.nextInt((aWall-y2Coridor) / minSize-1) + 2;
                 w1Size = (aWall-y2Coridor-1)/w1;
                 z = 1;
                 prisonWardsOnScheme.add(new PrisonWard(1, x1Coridor-2, 1, w1Size-2));
@@ -307,7 +306,7 @@ public class PrisonScheme {
                     z++;
                 }
             case 2:
-                w2 = rand.nextInt((cWall) / minSize-1) + 1;
+                w2 = rand.nextInt((cWall) / minSize-1) + 2;
                 w2Size = (cWall-1)/w2;
                 z = 1;
                 prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, bWall-dWall-x2Coridor-2, 1, w2Size-2));
@@ -323,7 +322,7 @@ public class PrisonScheme {
                     z++;
                 }
             case 3:
-                w3 = rand.nextInt((dWall) / minSize-1) + 1;
+                w3 = rand.nextInt((dWall) / minSize-1) + 2;
                 w3Size = (dWall-1)/w3;
                 z =1;
                 prisonWardsOnScheme.add(new PrisonWard(bWall-dWall+1, w3Size-2, cWall, aWall-cWall-y2Coridor-1));
@@ -339,7 +338,7 @@ public class PrisonScheme {
                     z++;
                 }
             case 4:
-                w4 = rand.nextInt((bWall-x2Coridor) / minSize-1) + 1;
+                w4 = rand.nextInt((bWall-x2Coridor) / minSize-1) + 2;
                 w4Size = (bWall-x2Coridor-1)/w4;
                 z = 1;
                 prisonWardsOnScheme.add(new PrisonWard(x2Coridor+1, w4Size-2, aWall-y1Coridor+1, y1Coridor-3));
