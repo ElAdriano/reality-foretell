@@ -80,6 +80,19 @@ public class PrisonScheme {
         addEntranceDoor();
         addWards();
         fillWards();
+
+        calculatePriceOfScheme();
+    }
+
+    private void calculatePriceOfScheme(){
+        price = 0;
+        price += prisonWardsOnScheme.size() * PrisonWard.price;
+        price += sanitaryNooksOnScheme.size() * SanitaryNook.price;
+        price += doorsOnScheme.size() * Door.price;
+        price += lightBulbsOnScheme.size() * LightBulb.price;
+        price += camerasOnScheme.size() * Camera.price;
+        price += windowsOnScheme.size() * Window.price;
+        price += MonitoringRoom.price;
     }
 
     private void fillAsOutsideArea() {
