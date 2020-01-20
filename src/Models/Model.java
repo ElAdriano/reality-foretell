@@ -2,6 +2,8 @@ package Models;
 
 public class Model {
 
+    private static int price;
+    private static double priority;
     private double startX;
     private double sizeX;
     private double endX;
@@ -9,13 +11,31 @@ public class Model {
     private double sizeY;
     private double endY;
 
-    public Model(double startX, double sizeX, double startY, double sizeY) {
+    public Model(double startX, double sizeX, double startY, double sizeY, int price, double priority) {
         this.startX = startX;
         this.sizeX = sizeX;
         this.endX = startX + sizeX;
         this.startY = startY;
         this.sizeY = sizeY;
         this.endY = startY + sizeY;
+        this.price = price;
+        this.priority = priority;
+    }
+
+    public static int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public static double getPriority() {
+        return priority;
+    }
+
+    public void setPriority(double priority) {
+        this.priority = priority;
     }
 
     public void rotate() {
@@ -79,5 +99,5 @@ public class Model {
         this.endY = endY;
         this.startY = this.endY - this.sizeY;
     }
-    
+
 }

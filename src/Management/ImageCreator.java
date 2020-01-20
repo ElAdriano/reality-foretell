@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import java.awt.image.BufferedImage;
 
 public class ImageCreator {
-    
+
     public static Image createImage(Fields[][] prisonPlan, int size) {
         int height = size;
         int width = size;
@@ -47,7 +47,7 @@ public class ImageCreator {
                 returningValue = 65280;
                 break;
             case WINDOW:
-                returningValue = 255;
+                returningValue = 16711680;
                 break;
             case OUTSIDE_FIELD:
                 returningValue = 8421504;
@@ -60,6 +60,12 @@ public class ImageCreator {
                 break;
             case EMPTY:
                 returningValue = 0;
+                break;
+            case TECHNICAL_ROOM:
+                returningValue = 16711680;
+                break;
+            case BUNK:
+                returningValue = 16711680;
                 break;
         }
         return returningValue;

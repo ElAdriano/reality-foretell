@@ -6,7 +6,7 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 
 public class ImageHolder {
-    
+
     private static int amountOfSchemes = 0;
     private static ArrayList<Image> generatedSchemes = new ArrayList<>();
     private static ArrayList<Background> generatedSchemesBackgrounds = new ArrayList<>();

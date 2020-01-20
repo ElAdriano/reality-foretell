@@ -14,4 +14,5 @@ public enum Fields {
     WINDOW,
     OUTSIDE_FIELD,
     CORRIDOR,
+    TECHNICAL_ROOM,
 }

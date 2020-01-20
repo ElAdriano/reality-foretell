@@ -5,15 +5,25 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
-class SchemeGeneratorTest {
+public class SchemeGeneratorTest {
+
+    private SchemeGenerator generator;
+
+    public SchemeGeneratorTest() {
+        SchemeGenerator.initStaticConditions();
+        SchemeGenerator.conditions.aDimensionOfPrison = 120;
+        SchemeGenerator.conditions.bDimensionOfPrison = 120;
+        SchemeGenerator.conditions.cDimensionOfPrison = 60;
+        SchemeGenerator.conditions.dDimensionOfPrison = 60;
+        generator = new SchemeGenerator();
+    }
 
     @Test
-    void rateIndividual(PrisonScheme individual) {
-        SchemeGenerator generator = new SchemeGenerator();
+    public void rateIndividual() {
         Double rate;
+        PrisonScheme individual = new PrisonScheme();
 
         rate = generator.rateIndividual(individual);
         assertTrue(rate instanceof Double);
@@ -23,9 +33,11 @@ class SchemeGeneratorTest {
     }
 
     @Test
-    void makeCrossingOver(PrisonScheme ind1, PrisonScheme ind2) {
+    public void makeCrossingOver() {
+        PrisonScheme ind1 = new PrisonScheme();
+        PrisonScheme ind2 = new PrisonScheme();
+
         PrisonScheme crossingResult;
-        SchemeGenerator generator = new SchemeGenerator();
 
         crossingResult = generator.makeCrossingOver(ind1, null);
         assertTrue(crossingResult.equals(ind1));
@@ -41,21 +53,69 @@ class SchemeGeneratorTest {
     }
 
     @Test
-    void createNextGeneration() {
-        SchemeGenerator generator = new SchemeGenerator();
+    public void createNextGeneration() {
         ArrayList<PrisonScheme> firstPopulation = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             firstPopulation.add(new PrisonScheme());
         }
 
-        ArrayList<PrisonScheme> population = new ArrayList<>();
+        ArrayList<PrisonScheme> population;
         population = generator.createNextGeneration(firstPopulation);
-        for(PrisonScheme prison: population){
-            if(!(prison instanceof PrisonScheme)){
-                assertEquals(true, false);
+        for (PrisonScheme prison : population) {
+            if (!(prison instanceof PrisonScheme)) {
+                fail();
             }
         }
-        assertEquals(true,true);
+        assertTrue(true);
     }
+
+    @Test
+    public void getBestIndividualInPopulation() {
+
+        ArrayList<PrisonScheme> population = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            population.add(new PrisonScheme());
+        }
+
+        PrisonScheme bestIndividualToCheck = generator.getBestIndividualInPopulation(population);
+
+        PrisonScheme bestIndividual = population.get(0);
+        PrisonScheme iterativeIndividual;
+        for (int i = 1; i < 100; i++) {
+            iterativeIndividual = population.get(i);
+            if (bestIndividual.getRate() < iterativeIndividual.getRate()) {
+                bestIndividual = iterativeIndividual;
+            }
+        }
+
+        assertEquals(bestIndividual, bestIndividualToCheck);
+    }
+
+    @Test
+    public void filterTopIndividuals() {
+        ArrayList<PrisonScheme> population = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            population.add(new PrisonScheme());
+        }
+
+        ArrayList<PrisonScheme> bestIndividuals = generator.filterTopIndividuals(population);
+
+        population.sort((a, b) -> {
+            if (a.getRate() > b.getRate()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+
+        for (int i = 0; i < bestIndividuals.size(); i++) {
+            if (!bestIndividuals.get(i).equals(population.get(i))) {
+                fail();
+            }
+        }
+        assertTrue(true);
+    }
+
 }
