@@ -66,12 +66,12 @@ public class DimensionsForm {
             aDimensionMonitor.setText(sizeFormat.format(newValue));
             prisonBuilding.setLayoutY(DEFAULT_LAYOUT_Y - ((double) newValue - INITIAL_HEIGHT) / 2);
             prisonBuilding.setPrefHeight((double) newValue);
-            outSidePrisonBuilding.setMaxHeight((double) newValue - 5);
+            outSidePrisonBuilding.setMaxHeight((double) newValue - 20);
 
-            if (aDimensionSlider.getValue() - cDimensionSlider.getValue() < 5) {
-                cDimensionSlider.setValue((double) newValue - 5);
+            if (aDimensionSlider.getValue() - cDimensionSlider.getValue() < 20) {
+                cDimensionSlider.setValue((double) newValue - 20);
                 cDimensionMonitor.setText(sizeFormat.format(cDimensionSlider.getValue()));
-                outSidePrisonBuilding.setPrefHeight((double) newValue - 5);
+                outSidePrisonBuilding.setPrefHeight((double) newValue - 20);
             }
         });
 
@@ -94,10 +94,10 @@ public class DimensionsForm {
                 bDimensionMonitor.setText(sizeFormat.format(bDimensionSlider.getValue()));
             }
 
-            if ((double) newValue - outSidePrisonBuilding.getLayoutX() <= 5) {
-                outSidePrisonBuilding.setPrefWidth(5);
-                outSidePrisonBuilding.setLayoutX((double) newValue - 5);
-                dDimensionSlider.setValue(5);
+            if ((double) newValue - outSidePrisonBuilding.getLayoutX() <= 20) {
+                outSidePrisonBuilding.setPrefWidth(20);
+                outSidePrisonBuilding.setLayoutX((double) newValue - 20);
+                dDimensionSlider.setValue(20);
                 dDimensionMonitor.setText(sizeFormat.format(dDimensionSlider.getValue()));
             }
 
@@ -117,16 +117,16 @@ public class DimensionsForm {
 
         dDimensionSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!bDimensionSlider.isValueChanging()) {
-                if (prisonBuilding.getWidth() - (double) newValue >= 5) {
+                if (prisonBuilding.getWidth() - (double) newValue >= 20) {
                     outSidePrisonBuilding.setPrefWidth((double) newValue);
                     outSidePrisonBuilding.setLayoutX(prisonBuilding.getWidth() - (double) newValue);
                     dDimensionSlider.setValue((double) newValue);
                     dDimensionMonitor.setText(sizeFormat.format((double) newValue));
                 } else {
-                    outSidePrisonBuilding.setPrefWidth(prisonBuilding.getWidth() - 5);
-                    outSidePrisonBuilding.setLayoutX(5);
-                    dDimensionSlider.setValue(prisonBuilding.getWidth() - 5);
-                    dDimensionMonitor.setText(sizeFormat.format(prisonBuilding.getWidth() - 5));
+                    outSidePrisonBuilding.setPrefWidth(prisonBuilding.getWidth() - 20);
+                    outSidePrisonBuilding.setLayoutX(20);
+                    dDimensionSlider.setValue(prisonBuilding.getWidth() - 20);
+                    dDimensionMonitor.setText(sizeFormat.format(prisonBuilding.getWidth() - 20));
                 }
             }
         });

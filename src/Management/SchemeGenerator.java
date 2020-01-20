@@ -55,6 +55,10 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
 
     @Override
     public double rateIndividual(PrisonScheme individual) {
+        if(individual == null){
+            return Double.NEGATIVE_INFINITY;
+        }
+
         Fields[][] schemePlan = individual.getPrisonPlan();
         int size = individual.getPlanSquareSize();
 
