@@ -552,6 +552,18 @@ public class PrisonScheme {
             addLamps();
             initialized = true;
         }
+        calculatePriceOfScheme();
+    }
+
+    private void calculatePriceOfScheme(){
+        price = 0;
+        price += prisonWardsOnScheme.size() * PrisonWard.getPrice();
+        price += sanitaryNooksOnScheme.size() * SanitaryNook.price;
+        price += doorsOnScheme.size() * Door.getPrice();
+        price += lightBulbsOnScheme.size() * LightBulb.price;
+        price += camerasOnScheme.size() * Camera.price;
+        price += windowsOnScheme.size() * Window.getPrice();
+        price += MonitoringRoom.price;
     }
 
 
@@ -567,8 +579,8 @@ public class PrisonScheme {
                     break;
                 }
             } else {
-                x = rand.nextInt(aWall-2)+1;
-                y = rand.nextInt(bWall-2)+1;
+                x = rand.nextInt(bWall-2)+1;
+                y = rand.nextInt(aWall-2)+1;
             }
             int a = rand.nextInt(2)+1;
             switch(a) {
@@ -610,8 +622,8 @@ public class PrisonScheme {
                     break;
                 }
             } else {
-                x = rand.nextInt(aWall-2)+1;
-                y = rand.nextInt(bWall-2)+1;
+                x = rand.nextInt(bWall-2)+1;
+                y = rand.nextInt(aWall-2)+1;
             }
             if(checkSurroundings(x, y)) {
                 prisonPlan[x][y] = Fields.LIGHT_BULB;

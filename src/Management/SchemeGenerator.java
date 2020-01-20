@@ -65,6 +65,8 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         int sanitaryNooksSurface = 0;
         int monitoringRoomsSurface = 0;
         int prisonWardsSurface = 0;
+        int corridorsSurface = 0;
+        int bunksSurface = 0;
         int wholePrisonSurface = 0;
         for (int h = 0; h < size; h++) {
             for (int w = 0; w < size; w++) {
@@ -79,6 +81,12 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                     case PRISON_WARD:
                         prisonWardsSurface++;
                         break;
+                    case CORRIDOR:
+                        corridorsSurface++;
+                        break;
+                    case BUNK:
+                        bunksSurface++;
+                        break;
                 }
                 if (field != Fields.OUTSIDE_FIELD) {
                     wholePrisonSurface++;
@@ -92,11 +100,13 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         double bMonitoringRoom = MonitoringRoom.priority * monitoringRoomsSurface / wholePrisonSurface;
         double cCamera = Camera.priority * SchemeGenerator.conditions.cameraRange * individual.getAmountOfCameras() * Camera.price / wholePrisonSurface;
         double dPrisonWard = PrisonWard.getPriority() * prisonWardsSurface * PrisonWard.getPrice() / wholePrisonSurface;
+        double dCorridor = ((double)wholePrisonSurface-(double)corridorsSurface)/(double)wholePrisonSurface;
+        double dBunks = bunksSurface * Bunk.getPriority() / wholePrisonSurface;
 
         double rate = Math.sqrt((Math.pow(aDoor, 2) + Math.pow(aWindow, 2)
-                + Math.pow(bSanitaryNook, 2) + Math.pow(bMonitoringRoom, 2)
-                + Math.pow(cCamera, 2)
-                + Math.pow(dPrisonWard, 2)) / 7
+                + Math.pow(bSanitaryNook, 2)
+                + Math.pow(cCamera, 2) + Math.pow(dBunks, 3)
+                + Math.pow(dPrisonWard, 2)) / 7 * dCorridor
         );
         return rate;
     }
