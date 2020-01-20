@@ -177,6 +177,24 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
 
         }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setBunksOnScheme(individual1.getBunksOnScheme());
+                break;
+            case 2:
+                babyPrison.setBunksOnScheme(individual2.getBunksOnScheme());
+                break;
+
+        }
+        switch(rand.nextInt(2)+1) {
+            case 1:
+                babyPrison.setLightBulbsOnScheme(individual1.getLightBulbsOnScheme());
+                break;
+            case 2:
+                babyPrison.setLightBulbsOnScheme(individual2.getLightBulbsOnScheme());
+                break;
+
+        }
         babyPrison.arrangePrisonScheme();
         return babyPrison;
     }

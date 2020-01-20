@@ -2,6 +2,7 @@ package Models;
 
 import Management.Fields;
 import Management.SchemeGenerator;
+import javafx.scene.chart.ScatterChart;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,6 +15,32 @@ public class PrisonScheme {
     private ArrayList<LightBulb> lightBulbsOnScheme;
     private ArrayList<Camera> camerasOnScheme;
     private ArrayList<Window> windowsOnScheme;
+
+    public ArrayList<LightBulb> getLightBulbsOnScheme() {
+        return lightBulbsOnScheme;
+    }
+
+    public void setLightBulbsOnScheme(ArrayList<LightBulb> lightBulbsOnScheme) {
+        this.lightBulbsOnScheme = lightBulbsOnScheme;
+    }
+
+    public ArrayList<Camera> getCamerasOnScheme() {
+        return camerasOnScheme;
+    }
+
+    public void setCamerasOnScheme(ArrayList<Camera> camerasOnScheme) {
+        this.camerasOnScheme = camerasOnScheme;
+    }
+
+    public ArrayList<Bunk> getBunksOnScheme() {
+        return bunksOnScheme;
+    }
+
+    public void setBunksOnScheme(ArrayList<Bunk> bunksOnScheme) {
+        this.bunksOnScheme = bunksOnScheme;
+    }
+
+    private ArrayList<Bunk> bunksOnScheme;
 
     private MonitoringRoom monitoringRoom;
     private SanitaryNook sanitaryNook;
@@ -50,6 +77,7 @@ public class PrisonScheme {
 
     private double rate;
     private double price;
+    private boolean initialized;
 
     public PrisonScheme() {
         this.prisonWardsOnScheme = new ArrayList<>();
@@ -58,6 +86,7 @@ public class PrisonScheme {
         this.lightBulbsOnScheme = new ArrayList<>();
         this.camerasOnScheme = new ArrayList<>();
         this.windowsOnScheme = new ArrayList<>();
+        this.bunksOnScheme = new ArrayList<>();
 
         this.planSquareSize = (int) Math.max(SchemeGenerator.conditions.bDimensionOfPrison, SchemeGenerator.conditions.aDimensionOfPrison);
 
@@ -518,37 +547,77 @@ public class PrisonScheme {
         addEntranceDoor();
         addWards();
         fillWards();
-        addBunks();
-        addLamps();
+        if(initialized == false) {
+            addBunks();
+            addLamps();
+            initialized = true;
+        }
     }
 
 
     private void addBunks() {
-        int n = (aWall*bWall-cWall*dWall)/6;
-        while (n>0) {
-            int x = rand.nextInt(aWall-2)+1;
-            int y = rand.nextInt(bWall-2)+1;
-            if(checkSurroundings(x, y) && checkSurroundings(x+1, y) && checkSurroundings(x, y+1) &&
-                    checkSurroundings(x+1, y+1) && checkSurroundings(x+1, y+2) && checkSurroundings(x, y+2)) {
-                prisonPlan[x][y] = Fields.BUNK;
-                prisonPlan[x+1][y] = Fields.BUNK;
-                prisonPlan[x][y+1] = Fields.BUNK;
-                prisonPlan[x+1][y+1] = Fields.BUNK;
-                prisonPlan[x+1][y+2] = Fields.BUNK;
-                prisonPlan[x][y+2] = Fields.BUNK;
-            } else n--;
+        int x,y;
+        int n = 0;
+        while (n<(aWall*bWall-cWall*dWall)) {
+            if(initialized){
+                try {
+                    x = (int) bunksOnScheme.get(n).getStartX();
+                    y = (int) bunksOnScheme.get(n).getStartY();
+                } catch (Exception e) {
+                    break;
+                }
+            } else {
+                x = rand.nextInt(aWall-2)+1;
+                y = rand.nextInt(bWall-2)+1;
+            }
+            int a = rand.nextInt(2)+1;
+            switch(a) {
+                case 1:
+                    if (checkSurroundings(x, y) && checkSurroundings(x, y+1) && checkSurroundings(x, y + 2) &&
+                            checkSurroundings(x + 1, y) && checkSurroundings(x + 1, y +1) && checkSurroundings(x+1, y + 2)) {
+                        prisonPlan[x][y] = Fields.BUNK;
+                        prisonPlan[x][y+1] = Fields.BUNK;
+                        prisonPlan[x][y + 2] = Fields.BUNK;
+                        prisonPlan[x + 1][y] = Fields.BUNK;
+                        prisonPlan[x + 1][y + 1] = Fields.BUNK;
+                        prisonPlan[x+1][y + 2] = Fields.BUNK;
+                        bunksOnScheme.add(new Bunk(x,2, y, 3));
+                    } else n++;
+                case 2:
+                    if (checkSurroundings(x, y) && checkSurroundings(x + 1, y) && checkSurroundings(x+2, y) &&
+                            checkSurroundings(x, y+1) && checkSurroundings(x + 1, y + 1) && checkSurroundings(x+2, y + 1)) {
+                        prisonPlan[x][y] = Fields.BUNK;
+                        prisonPlan[x+1][y] = Fields.BUNK;
+                        prisonPlan[x+2][y] = Fields.BUNK;
+                        prisonPlan[x][y+1] = Fields.BUNK;
+                        prisonPlan[x + 1][y + 1] = Fields.BUNK;
+                        prisonPlan[x+2][y + 1] = Fields.BUNK;
+                        bunksOnScheme.add(new Bunk(x, 3, y, 2));
+                    } else n++;
+            }
         }
     }
 
     private void addLamps() {
-        int n = (aWall*bWall-cWall*dWall);
-        while (n>0) {
-            int x = rand.nextInt(aWall-2)+1;
-            int y = rand.nextInt(bWall-2)+1;
+        int x,y;
+        int n = 0;
+        while (n<(aWall*bWall-cWall*dWall)) {
+            if(initialized){
+                try {
+                    x = (int) lightBulbsOnScheme.get(n).getStartX();
+                    y = (int) lightBulbsOnScheme.get(n).getStartY();
+                } catch (Exception e) {
+                    break;
+                }
+            } else {
+                x = rand.nextInt(aWall-2)+1;
+                y = rand.nextInt(bWall-2)+1;
+            }
             if(checkSurroundings(x, y)) {
                 prisonPlan[x][y] = Fields.LIGHT_BULB;
+                lightBulbsOnScheme.add(new LightBulb(x,y));
             } else
-                n--;
+                n++;
         }
     }
 
