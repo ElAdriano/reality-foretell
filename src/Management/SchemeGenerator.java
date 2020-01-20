@@ -166,7 +166,6 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
             case 2:
                 babyPrison.setW1(individual2.getW1());
                 break;
-
         }
         switch (rand.nextInt(2) + 1) {
             case 1:

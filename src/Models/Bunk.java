@@ -9,4 +9,12 @@ public class Bunk extends Model {
         super(startX, sizeX, startY, sizeY, price, priority);
     }
 
+    public static double getPriority() {
+        return priority;
+    }
+
+    public static int getPrice() {
+        return price;
+    }
+
 }

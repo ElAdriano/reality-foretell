@@ -9,4 +9,12 @@ public class Camera extends Model {
         super(x, 1, y, 1, price, priority);
     }
 
+    public static double getPriority() {
+        return priority;
+    }
+
+    public static int getPrice() {
+        return price;
+    }
+
 }

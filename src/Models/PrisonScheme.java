@@ -23,10 +23,12 @@ public class PrisonScheme {
     private int bWall;
     private int cWall;
     private int dWall;
+
     private int x1Corridor;
     private int x2Corridor;
     private int y1Corridor;
     private int y2Corridor;
+
     private int w1;
     private int w2;
     private int w3;
@@ -38,6 +40,7 @@ public class PrisonScheme {
     private int rMonitorRoomPlacement;
     private int extraCorridor;
     private int entranceDoorPosition;
+
     private Random rand;
     private double rate;
     private double price;
@@ -68,6 +71,7 @@ public class PrisonScheme {
 
         int xMR = SchemeGenerator.conditions.xMinSizeOfMonitoringRoom;
         int yMR = SchemeGenerator.conditions.yMinSizeOfMonitoringRoom;
+
         x1Corridor = rand.nextInt((bWall - dWall) * 2 / 3 - xMR) + xMR;
         x2Corridor = (bWall - dWall - x1Corridor) / 2 + x1Corridor;
         y1Corridor = rand.nextInt((aWall - cWall) * 2 / 3 - yMR) + yMR;
@@ -188,7 +192,6 @@ public class PrisonScheme {
                     for (int h = 1; h < aWall - 1; h++) {
                         if (h < aWall - y1Corridor && w < x1Corridor && h > aWall - y2Corridor) {
                             prisonPlan[w][h] = Fields.MONITORING_ROOM;
-
                         }
                     }
                 }
@@ -516,7 +519,6 @@ public class PrisonScheme {
                     sanitaryNooksOnScheme.add(new SanitaryNook(ward.getEndX() - SchemeGenerator.conditions.sizeOfSanitaryNook, ward.getEndY() - SchemeGenerator.conditions.sizeOfSanitaryNook));
                     break;
             }
-
         }
         for (SanitaryNook nook : sanitaryNooksOnScheme) {
             for (int w = (int) nook.getStartX(); w <= (int) nook.getEndX(); w++) {

@@ -11,4 +11,12 @@ public class SanitaryNook extends ComplexModel {
         super(startX, SchemeGenerator.conditions.sizeOfSanitaryNook, startY, SchemeGenerator.conditions.sizeOfSanitaryNook, price, priority);
     }
 
+    public static double getPriority() {
+        return priority;
+    }
+
+    public static int getPrice() {
+        return price;
+    }
+
 }

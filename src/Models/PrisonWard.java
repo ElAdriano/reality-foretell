@@ -1,6 +1,6 @@
 package Models;
 
-public class PrisonWard extends ComplexModel {
+public class PrisonWard extends ComplexModel{
 
     private int sanitaryNookPosition;
 
