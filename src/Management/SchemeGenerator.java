@@ -80,12 +80,12 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
             }
         }
 
-        double aDoor = individual.getAmountOfDoors() * Door.price * Door.priority / (individual.getAmountOfPrisonWards() + 2);
-        double aWindow = individual.getAmountOfWindows() * Window.price * Window.priority / (individual.getAmountOfPrisonWards() + 2);
+        double aDoor = individual.getAmountOfDoors() * Door.getPrice() * Door.getPriority() / (individual.getAmountOfPrisonWards() + 2);
+        double aWindow = individual.getAmountOfWindows() * Window.getPrice() * Window.getPriority() / (individual.getAmountOfPrisonWards() + 2);
         double bSanitaryNook = SanitaryNook.priority * sanitaryNooksSurface / wholePrisonSurface;
         double bMonitoringRoom = MonitoringRoom.priority * monitoringRoomsSurface / wholePrisonSurface;
         double cCamera = Camera.priority * SchemeGenerator.conditions.cameraRange * individual.getAmountOfCameras() * Camera.price / wholePrisonSurface;
-        double dPrisonWard = PrisonWard.priority * prisonWardsSurface * PrisonWard.price / wholePrisonSurface;
+        double dPrisonWard = PrisonWard.getPriority() * prisonWardsSurface * PrisonWard.getPrice() / wholePrisonSurface;
 
         double rate = Math.sqrt((Math.pow(aDoor, 2) + Math.pow(aWindow, 2)
                 + Math.pow(bSanitaryNook, 2) + Math.pow(bMonitoringRoom, 2)
