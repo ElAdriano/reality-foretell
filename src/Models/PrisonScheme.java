@@ -71,8 +71,6 @@ public class PrisonScheme {
         fillAsOutsideArea();
         fillAsEmpty();
 
-        //TODO create PrisonScheme instance
-
         addOutsideWalls();
         addCorridors();
         addInsideWalls();
