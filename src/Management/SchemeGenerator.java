@@ -55,7 +55,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
 
     @Override
     public double rateIndividual(PrisonScheme individual) {
-        if(individual == null){
+        if (individual == null) {
             return Double.NEGATIVE_INFINITY;
         }
 
@@ -106,7 +106,15 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         PrisonScheme babyPrison = new PrisonScheme();
         rand = new Random();
 
-        switch(rand.nextInt(2)+1) {
+        if (individual1 != null && individual2 == null) {
+            return individual1;
+        } else if (individual1 == null && individual2 != null) {
+            return individual2;
+        } else if (individual1 == null && individual2 == null) {
+            return babyPrison;
+        }
+
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setX1Corridor(individual1.getX1Corridor());
                 babyPrison.setX2Corridor(individual1.getX2Corridor());
@@ -117,7 +125,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
         }
 
-        switch(rand.nextInt(2)+1) {
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setY1Corridor(individual1.getY1Corridor());
                 babyPrison.setY2Corridor(individual1.getY2Corridor());
@@ -128,7 +136,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
 
         }
-        switch(rand.nextInt(2)+1) {
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setrMonitorRoomPlacement(individual1.getrMonitorRoomPlacement());
                 babyPrison.setExtraCorridor(individual1.getExtraCorridor());
@@ -141,7 +149,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
 
         }
-        switch(rand.nextInt(2)+1) {
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setW1(individual1.getW1());
                 break;
@@ -150,7 +158,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
 
         }
-        switch(rand.nextInt(2)+1) {
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setW2(individual1.getW2());
                 break;
@@ -159,7 +167,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
 
         }
-        switch(rand.nextInt(2)+1) {
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setW3(individual1.getW3());
                 break;
@@ -168,7 +176,7 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
 
         }
-        switch(rand.nextInt(2)+1) {
+        switch (rand.nextInt(2) + 1) {
             case 1:
                 babyPrison.setW4(individual1.getW4());
                 break;

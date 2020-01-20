@@ -51,11 +51,11 @@ class SchemeGeneratorTest {
 
         ArrayList<PrisonScheme> population = new ArrayList<>();
         population = generator.createNextGeneration(firstPopulation);
-        for(PrisonScheme prison: population){
-            if(!(prison instanceof PrisonScheme)){
+        for (PrisonScheme prison : population) {
+            if (!(prison instanceof PrisonScheme)) {
                 assertEquals(true, false);
             }
         }
-        assertEquals(true,true);
+        assertEquals(true, true);
     }
 }
