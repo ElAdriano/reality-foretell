@@ -8,7 +8,15 @@ public class SanitaryNook extends ComplexModel {
     public static final double priority = 0.5;
 
     public SanitaryNook(double startX, double startY) {
-        super(startX, SchemeGenerator.conditions.sizeOfSanitaryNook, startY, SchemeGenerator.conditions.sizeOfSanitaryNook, price, priority);
+        super(startX, SchemeGenerator.conditions.sizeOfSanitaryNook, startY, SchemeGenerator.conditions.sizeOfSanitaryNook);
+    }
+
+    public static double getPriority() {
+        return priority;
+    }
+
+    public static int getPrice() {
+        return price;
     }
 
 }

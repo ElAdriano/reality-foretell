@@ -65,8 +65,6 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         int sanitaryNooksSurface = 0;
         int monitoringRoomsSurface = 0;
         int prisonWardsSurface = 0;
-        int corridorsSurface = 0;
-        int bunksSurface = 0;
         int wholePrisonSurface = 0;
         for (int h = 0; h < size; h++) {
             for (int w = 0; w < size; w++) {
@@ -81,12 +79,6 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                     case PRISON_WARD:
                         prisonWardsSurface++;
                         break;
-                    case CORRIDOR:
-                        corridorsSurface++;
-                        break;
-                    case BUNK:
-                        bunksSurface++;
-                        break;
                 }
                 if (field != Fields.OUTSIDE_FIELD) {
                     wholePrisonSurface++;
@@ -97,16 +89,14 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
         double aDoor = individual.getAmountOfDoors() * Door.getPrice() * Door.getPriority() / (individual.getAmountOfPrisonWards() + 2);
         double aWindow = individual.getAmountOfWindows() * Window.getPrice() * Window.getPriority() / (individual.getAmountOfPrisonWards() + 2);
         double bSanitaryNook = SanitaryNook.priority * sanitaryNooksSurface / wholePrisonSurface;
-        double bMonitoringRoom = MonitoringRoom.priority * monitoringRoomsSurface / wholePrisonSurface;
-        double cCamera = Camera.priority * SchemeGenerator.conditions.cameraRange * individual.getAmountOfCameras() * Camera.price / wholePrisonSurface;
+        double bMonitoringRoom = MonitoringRoom.getPriority() * monitoringRoomsSurface / wholePrisonSurface;
+        double cCamera = Camera.getPriority() * SchemeGenerator.conditions.cameraRange * individual.getAmountOfCameras() * Camera.getPrice() / wholePrisonSurface;
         double dPrisonWard = PrisonWard.getPriority() * prisonWardsSurface * PrisonWard.getPrice() / wholePrisonSurface;
-        double dCorridor = ((double)wholePrisonSurface-(double)corridorsSurface)/(double)wholePrisonSurface;
-        double dBunks = bunksSurface * Bunk.getPriority() / wholePrisonSurface;
 
         double rate = Math.sqrt((Math.pow(aDoor, 2) + Math.pow(aWindow, 2)
-                + Math.pow(bSanitaryNook, 2)
-                + Math.pow(cCamera, 2) + Math.pow(dBunks, 3)
-                + Math.pow(dPrisonWard, 2)) / 7 * dCorridor
+                + Math.pow(bSanitaryNook, 2) + Math.pow(bMonitoringRoom, 2)
+                + Math.pow(cCamera, 2)
+                + Math.pow(dPrisonWard, 2)) / 7
         );
         return rate;
     }
@@ -184,24 +174,6 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 break;
             case 2:
                 babyPrison.setW4(individual2.getW4());
-                break;
-
-        }
-        switch(rand.nextInt(2)+1) {
-            case 1:
-                babyPrison.setBunksOnScheme(individual1.getBunksOnScheme());
-                break;
-            case 2:
-                babyPrison.setBunksOnScheme(individual2.getBunksOnScheme());
-                break;
-
-        }
-        switch(rand.nextInt(2)+1) {
-            case 1:
-                babyPrison.setLightBulbsOnScheme(individual1.getLightBulbsOnScheme());
-                break;
-            case 2:
-                babyPrison.setLightBulbsOnScheme(individual2.getLightBulbsOnScheme());
                 break;
 
         }
