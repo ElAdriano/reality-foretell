@@ -64,6 +64,9 @@ public class ImageCreator {
             case TECHNICAL_ROOM:
                 returningValue = 16711680;
                 break;
+            case BUNK:
+                returningValue = 16711680;
+                break;
         }
         return returningValue;
     }

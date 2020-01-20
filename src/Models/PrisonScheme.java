@@ -518,6 +518,56 @@ public class PrisonScheme {
         addEntranceDoor();
         addWards();
         fillWards();
+        addBunks();
+        addLamps();
+    }
+
+
+    private void addBunks() {
+        int n = (aWall*bWall-cWall*dWall)/6;
+        while (n>0) {
+            int x = rand.nextInt(aWall-2)+1;
+            int y = rand.nextInt(bWall-2)+1;
+            if(checkSurroundings(x, y) && checkSurroundings(x+1, y) && checkSurroundings(x, y+1) &&
+                    checkSurroundings(x+1, y+1) && checkSurroundings(x+1, y+2) && checkSurroundings(x, y+2)) {
+                prisonPlan[x][y] = Fields.BUNK;
+                prisonPlan[x+1][y] = Fields.BUNK;
+                prisonPlan[x][y+1] = Fields.BUNK;
+                prisonPlan[x+1][y+1] = Fields.BUNK;
+                prisonPlan[x+1][y+2] = Fields.BUNK;
+                prisonPlan[x][y+2] = Fields.BUNK;
+            } else n--;
+        }
+    }
+
+    private void addLamps() {
+        int n = (aWall*bWall-cWall*dWall);
+        while (n>0) {
+            int x = rand.nextInt(aWall-2)+1;
+            int y = rand.nextInt(bWall-2)+1;
+            if(checkSurroundings(x, y)) {
+                prisonPlan[x][y] = Fields.LIGHT_BULB;
+            } else
+                n--;
+        }
+    }
+
+    private boolean checkSurroundings(int x, int y) {
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                if(!(prisonPlan[x-1][y-1] == Fields.EMPTY) ||
+                    !(prisonPlan[x][y-1] == Fields.EMPTY) ||
+                    !(prisonPlan[x+1][y-1] == Fields.EMPTY) ||
+                    !(prisonPlan[x-1][y] == Fields.EMPTY) ||
+                    !(prisonPlan[x-1][y+1] == Fields.EMPTY) ||
+                    !(prisonPlan[x][y+1] == Fields.EMPTY) ||
+                    !(prisonPlan[x+1][y] == Fields.EMPTY) ||
+                    !(prisonPlan[x+1][y+1] == Fields.EMPTY) ){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public int getPlanSquareSize() {
