@@ -31,7 +31,9 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
     private ArrayList<PrisonScheme> createFirstGeneration() {
         ArrayList<PrisonScheme> population = new ArrayList<>();
         for (int i = 0; i < 105; i++) {
-            population.add(new PrisonScheme());
+            PrisonScheme scheme = new PrisonScheme();
+            scheme.arrangePrisonScheme();
+            population.add(scheme);
         }
         return population;
     }
@@ -98,6 +100,8 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
     @Override
     public PrisonScheme makeCrossingOver(PrisonScheme individual1, PrisonScheme individual2) {
         PrisonScheme babyPrison = new PrisonScheme();
+        rand = new Random();
+
         switch(rand.nextInt(2)+1) {
             case 1:
                 babyPrison.setX1Corridor(individual1.getX1Corridor());
@@ -107,8 +111,8 @@ public class SchemeGenerator extends Thread implements GeneticAlgorithm {
                 babyPrison.setX1Corridor(individual2.getX1Corridor());
                 babyPrison.setX2Corridor(individual2.getX2Corridor());
                 break;
-
         }
+
         switch(rand.nextInt(2)+1) {
             case 1:
                 babyPrison.setY1Corridor(individual1.getY1Corridor());
